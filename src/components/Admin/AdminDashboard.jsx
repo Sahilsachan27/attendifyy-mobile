@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import Dashboard from './Dashboard';
 import StudentRecords from './StudentRecords';
@@ -13,7 +13,6 @@ import './ProSidebarStyles.css';
 function AdminDashboard({ user, onLogout }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [collapsed, setCollapsed] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const tabs = {
     dashboard: { icon: '📊', label: 'Dashboard' },
@@ -28,8 +27,20 @@ function AdminDashboard({ user, onLogout }) {
 
   const handleTabClick = (key) => {
     setActiveTab(key);
-    setMobileMenuOpen(false); // Close sidebar on mobile after selection
   };
+
+  // ✅ NEW: Listen for navigation events from Dashboard quick actions
+  useEffect(() => {
+    const handleNavigate = (event) => {
+      const tabKey = event.detail;
+      if (tabs[tabKey]) {
+        setActiveTab(tabKey);
+      }
+    };
+
+    window.addEventListener('navigateToTab', handleNavigate);
+    return () => window.removeEventListener('navigateToTab', handleNavigate);
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -46,7 +57,7 @@ function AdminDashboard({ user, onLogout }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative">
+    <div className="flex min-h-screen bg-gray-50 relative" style={{ paddingBottom: "70px" }}>
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar
@@ -158,64 +169,22 @@ function AdminDashboard({ user, onLogout }) {
         </Sidebar>
       </div>
 
-      {/* Mobile Fullscreen Menu */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col backdrop-blur-md bg-black/30">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-white/80 backdrop-blur-md">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🛡️</span>
-              <span className="font-bold text-lg text-gray-900">Attendify Admin</span>
-            </div>
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-2xl"
-              aria-label="Close menu"
-            >
-              ✕
-            </button>
-          </div>
-          <nav className="flex-1 flex flex-col justify-center items-center gap-4 px-4">
-            {Object.entries(tabs).map(([key, { icon, label }]) => (
-              <button
-                key={key}
-                onClick={() => { setActiveTab(key); setMobileMenuOpen(false); }}
-                className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-semibold flex items-center gap-3 justify-center shadow transition-all
-                  ${activeTab === key
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white'
-                    : 'bg-gray-100 text-gray-900 hover:bg-indigo-50'}
-                `}
-              >
-                <span className="text-2xl">{icon}</span>
-                <span>{label}</span>
-              </button>
-            ))}
-            <button
-              onClick={onLogout}
-              className="w-full max-w-xs py-4 px-6 rounded-xl text-lg font-semibold flex items-center gap-3 justify-center bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow hover:scale-105 transition-all mt-8"
-            >
-              <span>🚪</span>
-              <span>Logout</span>
-            </button>
-          </nav>
-        </div>
-      )}
-
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden w-full">
         {/* Top Navigation Bar */}
         <header className="h-14 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30">
-          <div className="flex items-center gap-4">
-            {/* REMOVE: Mobile menu toggle button here */}
-            {/* ...existing breadcrumb... */}
-            <div className="flex items-center gap-2 text-sm">
-              <span className="text-gray-500 hidden sm:inline">Admin</span>
-              <span className="text-gray-300 hidden sm:inline">›</span>
-              <span className="text-gray-900 font-medium">{tabs[activeTab].label}</span>
+          {/* ✅ ENHANCED: Better styled header */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600">
+              <span className="text-xl">🛡️</span>
+              <span className="text-white font-bold text-sm sm:text-base">Admin Dashboard</span>
             </div>
+            <span className="text-gray-300 hidden sm:inline">›</span>
+            <span className="text-gray-700 font-medium text-sm hidden sm:inline">{tabs[activeTab].label}</span>
           </div>
 
+          {/* ✅ KEPT: Notification bell */}
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Notification bell */}
             <button className="relative w-9 h-9 rounded-lg bg-gray-100 border border-gray-300 
                                hover:bg-white hover:border-indigo-500 transition-all flex items-center justify-center">
               <span className="text-lg">🔔</span>
@@ -223,28 +192,40 @@ function AdminDashboard({ user, onLogout }) {
                                rounded-full text-white text-xs font-bold flex items-center justify-center 
                                border border-white">3</span>
             </button>
-            {/* User Profile - Avatar acts as mobile menu toggle ONLY on mobile */}
-            <div
-              className="flex items-center gap-2 px-2 py-1.5 sm:px-3 rounded-lg bg-gray-100 border border-gray-300 hover:bg-white hover:border-indigo-500 transition-all cursor-pointer lg:cursor-default"
-              onClick={() => {
-                if (window.innerWidth < 1024) setMobileMenuOpen(true);
-              }}
-              style={{ userSelect: 'none' }}
-            >
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-xs sm:text-sm shadow-sm">
-                {user.name.charAt(0)}
-              </div>
-              <div className="hidden sm:flex flex-col">
-                <span className="text-sm font-medium text-gray-900">{user.name}</span>
-                <span className="text-xs text-gray-500">Admin</span>
-              </div>
-            </div>
           </div>
         </header>
 
         {/* Content Area */}
         <main className="flex-1 p-4 sm:p-6 overflow-y-auto bg-gray-50">{renderContent()}</main>
       </div>
+
+      {/* ✅ Floating Bottom Navigation (Mobile Only) */}
+      <nav className="floating-bottom-nav md:hidden lg:hidden">
+        <button onClick={() => handleTabClick('dashboard')}>
+          📊
+          <span>Home</span>
+        </button>
+
+        <button onClick={() => handleTabClick('students')}>
+          👥
+          <span>Students</span>
+        </button>
+
+        <button onClick={() => handleTabClick('profile')}>
+          📋
+          <span>profile</span>
+        </button>
+
+        <button onClick={() => handleTabClick('geofence')}>
+          🤖
+          <span>geofence</span>
+        </button>
+
+        <button onClick={onLogout}>
+          🚪
+          <span>Logout</span>
+        </button>
+      </nav>
     </div>
   );
 }

@@ -7,7 +7,6 @@ import HeroSection from './HeroSection'
 function LandingPage() {
   const navigate = useNavigate()
   const [showAuthModal, setShowAuthModal] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navLinks = [
     { label: 'Home', href: '#home' },
@@ -21,9 +20,12 @@ function LandingPage() {
   }
 
   return (
-    <div className="landing-page">
+    <div className="landing-page" style={{ paddingTop: "0px" }}>
       {/* Top Navbar - enhanced */}
-      <header className="landing-navbar w-full bg-white/80 backdrop-blur-lg shadow-sm fixed top-0 left-0 z-40">
+      <header
+        className="landing-navbar w-full bg-white shadow-sm fixed top-0 left-0 z-50"
+        style={{ paddingTop: "32px" }}
+      >
         <div className="navbar-inner flex items-center justify-between px-4 py-2 md:px-8">
           {/* App Name & 3D Icon (always visible, left side) */}
           <div className="flex items-center gap-2 min-w-[180px]">
@@ -104,7 +106,6 @@ function LandingPage() {
                 className="hover:text-primary-600 transition-colors"
                 onClick={(e) => {
                   e.preventDefault()
-                  setMobileMenuOpen(false)
                   if (link.href === '#home')
                     window.scrollTo({ top: 0, behavior: 'smooth' })
                   else
@@ -132,118 +133,8 @@ function LandingPage() {
               Register
             </button>
           </div>
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200"
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
-            style={{ zIndex: 51 }}
-          >
-            {/* Simple hamburger icon */}
-            <svg
-              className="w-7 h-7"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 7h16M4 12h16M4 17h16"
-              />
-            </svg>
-          </button>
         </div>
       </header>
-
-      {/* Mobile Menu - Tailwind Only */}
-      {mobileMenuOpen && (
-        <>
-          {/* Blurred Overlay */}
-          <div
-            onClick={() => setMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
-          />
-
-          {/* Centered Panel */}
-          <div
-            role="dialog"
-            aria-modal="true"
-            className="fixed z-50 top-1/2 left-1/2 w-[90%] max-w-sm
-                 -translate-x-1/2 -translate-y-1/2
-                 rounded-2xl bg-white p-5 shadow-2xl
-                 animate-in zoom-in-95 duration-200"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🎓</span>
-                <span className="font-semibold text-gray-800">
-                  Attendify
-                </span>
-              </div>
-
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close menu"
-                className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Navigation */}
-            <nav className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setMobileMenuOpen(false)
-                    if (link.href === '#home')
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    else
-                      document
-                        .getElementById(link.href.replace('#', ''))
-                        ?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                  className="w-full text-center py-3 rounded-md
-                       bg-gray-100 hover:bg-gray-200
-                       font-semibold text-gray-800 transition"
-                >
-                  {link.label}
-                </a>
-              ))}
-
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false)
-                  navigate('/login')
-                }}
-                className="w-full py-3 rounded-md
-                     bg-gradient-to-r from-blue-500 to-indigo-600
-                     text-white font-semibold shadow-md"
-              >
-                Login
-              </button>
-
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false)
-                  navigate('/register')
-                }}
-                className="w-full py-3 rounded-md
-                     bg-gradient-to-r from-green-500 to-emerald-600
-                     text-white font-semibold shadow-md"
-              >
-                Register
-              </button>
-            </nav>
-          </div>
-        </>
-      )}
 
       {/* Hero Section */}
       <HeroSection />
@@ -573,6 +464,38 @@ function LandingPage() {
           </p>
         </div>
       </footer>
+
+      {/* Floating Bottom Navigation (Mobile Only) */}
+      <nav className="floating-bottom-nav md:hidden">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          🏠
+          <span>Home</span>
+        </button>
+
+        <button onClick={() =>
+          document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+        }>
+          ✨
+          <span>Features</span>
+        </button>
+
+        <button onClick={() => navigate('/login')}>
+          🔐
+          <span>Login</span>
+        </button>
+
+        <button onClick={() => navigate('/register')}>
+          📝
+          <span>Register</span>
+        </button>
+
+        <button onClick={() =>
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+        }>
+          🤝
+          <span>Contact</span>
+        </button>
+      </nav>
 
       {/* Auth Modal */}
       <AuthModal

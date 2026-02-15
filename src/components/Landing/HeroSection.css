@@ -6,7 +6,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
-  padding: 4rem 6rem;
+  padding: 120px 6rem 4rem;  /* Added 120px top padding for fixed navbar */
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -191,7 +191,12 @@
 
 /* Responsive: stack on smaller screens and reduce portrait size */
 @media (max-width: 1024px) {
-  .hero-section { grid-template-columns: 1fr; padding: 2.25rem 1rem; gap: 1.5rem; text-align: center; }
+  .hero-section { 
+    grid-template-columns: 1fr; 
+    padding: 1rem 1rem 2.25rem;  /* Reduced mobile padding too */
+    gap: 1.5rem; 
+    text-align: center; 
+  }
   .hero-title { font-size: 2.2rem; }
   .hero-description { font-size: 1rem; margin: 0 auto 1rem; max-width: 36rem; }
   .hero-stats { justify-content: center; }

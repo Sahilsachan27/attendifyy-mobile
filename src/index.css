@@ -4,6 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== GLOBAL ANDROID SAFE SPACE FIX ===== */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+/* This pushes entire app below Android status bar */
+#root {
+  padding-top: 32px;   /* Adjust if needed (28px-40px) */
+}
+
 @layer base {
   * {
     @apply box-border;
@@ -70,4 +84,60 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
+}
+
+.hero-section {
+  padding-top: 20px;
+}
+
+/* ===== Floating iOS Style Bottom Nav (Global) ===== */
+
+.floating-bottom-nav {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  padding: 12px 1px;
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.15),
+    0 2px 8px rgba(0,0,0,0.1);
+
+  z-index: 1000;
+}
+
+.floating-bottom-nav button {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: #475569;
+  gap: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.floating-bottom-nav button:hover,
+.floating-bottom-nav button:active {
+  color: #6366f1;
+  transform: translateY(-2px);
+}
+
+.floating-bottom-nav span {
+  font-size: 15px;
 }

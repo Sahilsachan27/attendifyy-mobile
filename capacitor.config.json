@@ -1,0 +1,13 @@
+{
+  "appId": "in.attendifyy.app",
+  "appName": "Attendify",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false,
+      "backgroundColor": "#6366f1",
+      "style": "LIGHT"
+    }
+  }
+}

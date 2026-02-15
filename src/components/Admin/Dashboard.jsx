@@ -48,6 +48,34 @@ function Dashboard() {
     }
   };
 
+  // ✅ NEW: Quick action handlers
+  const quickActions = [
+    { 
+      icon: '➕', 
+      label: 'Register Student', 
+      gradient: 'from-blue-500 to-blue-600',
+      onClick: () => window.dispatchEvent(new CustomEvent('navigateToTab', { detail: 'register' }))
+    },
+    { 
+      icon: '📊', 
+      label: 'View Attendance', 
+      gradient: 'from-emerald-500 to-teal-600',
+      onClick: () => window.dispatchEvent(new CustomEvent('navigateToTab', { detail: 'attendance' }))
+    },
+    { 
+      icon: '🤖', 
+      label: 'Train Model', 
+      gradient: 'from-purple-500 to-indigo-600',
+      onClick: () => window.dispatchEvent(new CustomEvent('navigateToTab', { detail: 'train' }))
+    },
+    { 
+      icon: '🎭', 
+      label: 'Face Auth Status', 
+      gradient: 'from-amber-500 to-orange-600',
+      onClick: () => window.dispatchEvent(new CustomEvent('navigateToTab', { detail: 'faceauth' }))
+    },
+  ];
+
   return (
     <div className="space-y-4 sm:space-y-5">
       {/* Stats Slider - Responsive height */}
@@ -130,23 +158,19 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Quick Actions - Responsive grid */}
+          {/* Quick Actions - Now with click handlers */}
           <div className="bg-white rounded-lg shadow p-4 sm:p-5">
             <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4 flex items-center gap-2">
               ⚡ Quick Actions
             </h3>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              {[
-                { icon: '➕', label: 'Register Student', gradient: 'from-blue-500 to-blue-600' },
-                { icon: '📊', label: 'View Attendance', gradient: 'from-emerald-500 to-teal-600' },
-                { icon: '🤖', label: 'Train Model', gradient: 'from-purple-500 to-indigo-600' },
-                { icon: '⚙️', label: 'Settings', gradient: 'from-amber-500 to-orange-600' },
-              ].map((action, index) => (
+              {quickActions.map((action, index) => (
                 <button
                   key={index}
+                  onClick={action.onClick}
                   className={`p-3 sm:p-4 rounded-lg bg-gradient-to-br ${action.gradient} text-white font-medium text-xs sm:text-sm
                              shadow hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 
-                             flex flex-col items-center gap-2`}
+                             flex flex-col items-center gap-2 cursor-pointer active:scale-95`}
                 >
                   <span className="text-2xl">{action.icon}</span>
                   <span className="text-center">{action.label}</span>

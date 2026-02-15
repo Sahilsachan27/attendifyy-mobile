@@ -4,6 +4,7 @@ import { adminAPI, studentAPI } from '../../services/api';
 
 function Register() {
   const webcamRef = useRef(null);
+  const timeoutRef = useRef(null);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -17,60 +18,63 @@ function Register() {
     year: '',
   });
   const [images, setImages] = useState([]);
-  const [supportsCamera, setSupportsCamera] = useState(true); // NEW: detect media support
-  const [studentIdStatus, setStudentIdStatus] = useState(null); // null | 'available' | 'taken' | 'checking'
-  const [studentIdMessage, setStudentIdMessage] = useState('');
+  const [supportsCamera, setSupportsCamera] = useState(true);
+  const [studentIdState, setStudentIdState] = useState({
+    status: null,
+    message: ''
+  });
 
   useEffect(() => {
-    // detect getUserMedia support (may be blocked on insecure origins)
     const hasMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     setSupportsCamera(hasMedia);
   }, []);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // ✅ NEW: Real-time Student ID validation (Updated to show only name)
   const checkStudentId = async (studentId) => {
     if (!studentId || studentId.length < 3) {
-      setStudentIdStatus(null);
-      setStudentIdMessage('');
+      setStudentIdState({
+        status: null,
+        message: ''
+      });
       return;
     }
 
-    setStudentIdStatus('checking');
-    setStudentIdMessage('⏳ Checking...');
+    setStudentIdState({
+      status: 'checking',
+      message: '⏳ Checking...'
+    });
 
     try {
       const response = await adminAPI.checkStudentId(studentId.trim().toUpperCase());
       const data = response.data;
 
-      if (data.exists) {
-        setStudentIdStatus('taken');
-        // ✅ UPDATED: Show only name, no email
-        setStudentIdMessage(`❌ Already registered by ${data.registered_name}`);
-      } else {
-        setStudentIdStatus('available');
-        setStudentIdMessage('✅ Student ID available');
-      }
+      setStudentIdState({
+        status: data.exists === true ? 'taken' : 'available',
+        message: data.exists === true
+          ? `❌ Already registered by ${data.registered_name || 'someone'}`
+          : '✅ Student ID available'
+      });
+
     } catch (err) {
-      console.error('Error checking Student ID:', err);
-      setStudentIdStatus(null);
-      setStudentIdMessage('');
+      setStudentIdState({
+        status: 'error',
+        message: '❌ Error checking ID'
+      });
     }
   };
 
-  // ✅ Debounced change handler for Student ID
   const handleStudentIdChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, student_id: value });
 
-    // Clear previous timeout
-    if (window.studentIdTimeout) {
-      clearTimeout(window.studentIdTimeout);
+    // Clear previous timeout (React-safe way)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
 
     // Set new timeout (500ms delay after user stops typing)
-    window.studentIdTimeout = setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       checkStudentId(value);
     }, 500);
   };
@@ -83,7 +87,6 @@ function Register() {
     }
   };
 
-  // Handle native file input (mobile camera fallback)
   const handleFileInput = async (e) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
@@ -118,11 +121,9 @@ function Register() {
     setMessage('⏳ Creating account...');
     
     try {
-      // Step 1: Register student account
       await adminAPI.registerStudent(formData);
       setMessage('✅ Account created!\n⏳ Uploading face images to cloud...');
       
-      // ✅ Step 2: Use studentAPI instead of direct fetch
       const response = await studentAPI.registerFace({
         student_id: formData.student_id.trim().toUpperCase(),
         images: images
@@ -134,14 +135,12 @@ function Register() {
         throw new Error(data.error || 'Face image upload failed');
       }
       
-      // Check if auto-training was successful
       if (data.training_result?.success) {
         setMessage(`✅ Registration complete!\n✅ ${data.face_images_count} images uploaded\n✅ AI model trained automatically\n🎉 You can now login!`);
       } else {
         setMessage(`✅ Registration complete!\n✅ ${data.face_images_count} images uploaded\n⚠️ AI model training pending (admin will train manually)\n🎉 You can now login!`);
       }
       
-      // Optional: Auto-redirect to login after 3 seconds
       setTimeout(() => {
         window.location.href = '/login';
       }, 3000);
@@ -149,7 +148,6 @@ function Register() {
     } catch (err) {
       const errorMessage = err.response?.data?.error || err.message || 'Registration failed';
       
-      // ✅ ENHANCED ERROR DISPLAY FOR DUPLICATE STUDENT_ID
       if (errorMessage.includes('Student ID') && errorMessage.includes('already registered')) {
         setError(`❌ ${errorMessage}\n\n💡 Tip: Try using a different Student ID like:\n• ${formData.student_id}A\n• ${formData.student_id}_NEW\n• Or contact admin if this is your correct ID`);
       } else if (errorMessage.includes('Email') && errorMessage.includes('already registered')) {
@@ -174,13 +172,12 @@ function Register() {
 
         {step === 1 && (
           <div className="login-form">
-            {/* Student ID with Real-Time Validation */}
             <div className="form-group">
               <label>📝 Student ID</label>
               <input
                 className={`input-field ${
-                  studentIdStatus === 'available' ? 'border-green-500' :
-                  studentIdStatus === 'taken' ? 'border-red-500' : ''
+                  studentIdState.status === 'available' ? 'border-green-500' :
+                  studentIdState.status === 'taken' ? 'border-red-500' : ''
                 }`}
                 name="student_id"
                 value={formData.student_id}
@@ -188,21 +185,19 @@ function Register() {
                 placeholder="stu001"
                 required
               />
-              {/* Real-time feedback */}
-              {studentIdMessage && (
+              {studentIdState.message && (
                 <div
                   className={`mt-2 text-sm font-semibold ${
-                    studentIdStatus === 'available' ? 'text-green-600' :
-                    studentIdStatus === 'taken' ? 'text-red-600' :
+                    studentIdState.status === 'available' ? 'text-green-600' :
+                    studentIdState.status === 'taken' ? 'text-red-600' :
                     'text-gray-500'
                   }`}
                 >
-                  {studentIdMessage}
+                  {studentIdState.message}
                 </div>
               )}
             </div>
 
-            {/* Basic fields */}
             <div className="form-group">
               <label>👤 Full Name</label>
               <input className="input-field" name="name" value={formData.name} onChange={onChange} placeholder="John Doe" required />
@@ -235,7 +230,7 @@ function Register() {
               className="btn-login w-full"
               type="button"
               onClick={() => setStep(2)}
-              disabled={studentIdStatus === 'taken'}
+              disabled={studentIdState.status === 'taken'}
             >
               Next: Face Capture →
             </button>
@@ -244,7 +239,6 @@ function Register() {
 
         {step === 2 && (
           <div className="login-form flex flex-col gap-4">
-            {/* Webcam for supported/desktop browsers */}
             {supportsCamera ? (
               <>
                 <div className="webcam-container mx-auto rounded-xl overflow-hidden" style={{ width: '100%', maxWidth: 360, aspectRatio: '1/1' }}>
@@ -273,7 +267,6 @@ function Register() {
                 </div>
               </>
             ) : (
-              /* Mobile fallback: native camera via file input (works on HTTP/LAN) */
               <>
                 <div className="mx-auto text-center w-full">
                   <p className="mb-3">📱 Browser blocked camera. Use phone camera below.</p>
@@ -298,7 +291,6 @@ function Register() {
               </>
             )}
 
-            {/* Preview */}
             {images.length > 0 && (
               <div className="captured-images grid grid-cols-3 gap-2 mt-3">
                 {images.map((src, i) => (

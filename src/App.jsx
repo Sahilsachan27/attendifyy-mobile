@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { Capacitor } from '@capacitor/core';
 import LandingPage from './components/Landing/LandingPage';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
@@ -9,6 +11,15 @@ import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
+
+  // Configure StatusBar for native platforms
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      StatusBar.setOverlaysWebView({ overlay: false }); // ✅ Prevents overlap
+      StatusBar.setBackgroundColor({ color: '#6366f1' }); // Match your theme
+      StatusBar.setStyle({ style: Style.Light }); // White icons for dark background
+    }
+  }, []);
 
   // decode JWT payload safely
   const decodeToken = (token) => {
@@ -84,7 +95,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <Routes>
           {/* Landing Page */}
@@ -142,7 +153,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
