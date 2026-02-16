@@ -98,31 +98,60 @@ function App() {
     <HashRouter>
       <div className="App">
         <Routes>
+          {/* Landing Page */}
+          <Route path="/" element={<LandingPage />} />
 
-  {/* Open Student Dashboard directly */}
-  <Route
-    path="/"
-    element={
-      <StudentDashboard
-        user={{ name: "Test Student", role: "student", student_id: "STU001" }}
-        onLogout={() => {}}
-      />
-    }
-  />
+          {/* Login Route */}
+          <Route
+            path="/login"
+            element={
+              user ? (
+                <Navigate to={user.role === 'admin' ? '/admin' : '/student'} replace />
+              ) : (
+                <Login onLogin={handleLogin} />
+              )
+            }
+          />
 
-  {/* Admin Dashboard (optional route) */}
-  <Route
-    path="/admin"
-    element={
-      <AdminDashboard
-        user={{ name: "Admin User", role: "admin" }}
-        onLogout={() => {}}
-      />
-    }
-  />
+          {/* Register (Student self-registration) */}
+          <Route
+            path="/register"
+            element={
+              user ? (
+                <Navigate to={user.role === 'admin' ? '/admin' : '/student'} replace />
+              ) : (
+                <Register />
+              )
+            }
+          />
 
-</Routes>
+          {/* Protected Student Routes */}
+          <Route
+            path="/student/*"
+            element={
+              user && user.role === 'student' ? (
+                <StudentDashboard user={user} onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
 
+          {/* Protected Admin Routes */}
+          <Route
+            path="/admin/*"
+            element={
+              user && user.role === 'admin' ? (
+                <AdminDashboard user={user} onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+
+          {/* Catch all - redirect to landing */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </div>
     </HashRouter>
   );
