@@ -1,9 +1,11 @@
 .landing-page {
   width: 100%;
   overflow-x: hidden;
-  padding-bottom: 70px; /* ✅ Reduced from 120px to 70px - removes excess white space */
+  padding-top: 0;
 }
 
+/* Remove all desktop-specific styles */
+/* All styling now handled inline with Tailwind classes */
 /* NOTE: hero-section, hero-title, portrait-frame and related styles moved to HeroSection.css */
 /* Removed duplicated hero CSS to avoid conflicts. */
 

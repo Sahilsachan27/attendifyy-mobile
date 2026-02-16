@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import Dashboard from './Dashboard';
 import StudentRecords from './StudentRecords';
 import RegisterStudent from './RegisterStudent';
@@ -8,20 +7,18 @@ import FaceAuthStatus from './FaceAuthStatus';
 import GeofenceConfig from './GeofenceConfig';
 import TrainModel from './TrainModel';
 import AdminProfile from './AdminProfile';
-import './ProSidebarStyles.css';
 
 function AdminDashboard({ user, onLogout }) {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [collapsed, setCollapsed] = useState(false);
 
   const tabs = {
     dashboard: { icon: '📊', label: 'Dashboard' },
-    students: { icon: '👥', label: 'Student Records' },
-    register: { icon: '➕', label: 'Register Student' },
-    attendance: { icon: '📋', label: 'Attendance Records' },
-    faceauth: { icon: '🎭', label: 'Face Auth Status' },
-    geofence: { icon: '🌍', label: 'Geofence Config' },
-    train: { icon: '🤖', label: 'Train Model' },
+    students: { icon: '👥', label: 'Students' },
+    register: { icon: '➕', label: 'Register' },
+    attendance: { icon: '📋', label: 'Attendance' },
+    faceauth: { icon: '🎭', label: 'Face Auth' },
+    geofence: { icon: '🌍', label: 'Geofence' },
+    train: { icon: '🤖', label: 'Train AI' },
     profile: { icon: '👤', label: 'Profile' },
   };
 
@@ -29,7 +26,7 @@ function AdminDashboard({ user, onLogout }) {
     setActiveTab(key);
   };
 
-  // ✅ NEW: Listen for navigation events from Dashboard quick actions
+  // ✅ KEEP: Listen for navigation events from Dashboard quick actions
   useEffect(() => {
     const handleNavigate = (event) => {
       const tabKey = event.detail;
@@ -57,174 +54,82 @@ function AdminDashboard({ user, onLogout }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50 relative" style={{ paddingBottom: "70px" }}>
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:block">
-        <Sidebar
-          collapsed={collapsed}
-          backgroundColor="rgb(15, 23, 42)"
-          width="260px"
-          collapsedWidth="70px"
-          className="h-screen shadow-2xl"
-          style={{
-            border: 'none',
-            background: 'linear-gradient(180deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 100%)',
-          }}
-        >
-          {/* Sidebar Header */}
-          <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-            {!collapsed && (
-              <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                ✨ Admin Portal
-              </h2>
-            )}
-            {/* Sidebar controls: arrow when open, admin icon when collapsed */}
-            <div>
-              {!collapsed ? (
-                <button
-                  onClick={() => setCollapsed(true)}
-                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all text-white text-sm hidden lg:flex"
-                  aria-label="Collapse sidebar"
-                  title="Collapse"
-                >
-                  ←
-                </button>
-              ) : (
-                // Admin icon with configurable size and position
-                <div className="flex w-full justify-center items-center">
-                  <button
-                    onClick={() => setCollapsed(false)}
-                    className="rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl shadow-sm hidden lg:flex"
-                    aria-label="Open sidebar"
-                    title="Open sidebar"
-                    style={{
-                      width: '44px',      // Change size here (e.g. '44px')
-                      height: '44px',     // Change size here
-                      fontSize: '2rem',   // Change icon size here
-                      transform: 'translate(0px, 0px)' // Change position (x, y)
-                    }}
-                  >
-                    🛡️
-                  </button>
-                </div>
-              )}
-            </div>
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* ✅ FIXED: Header matching Landing Page style */}
+      <header className="w-full bg-white shadow-sm fixed top-0 left-0 z-50" style={{ paddingTop: "32px" }}>
+        <div className="flex items-center justify-between px-4 py-2">
+          {/* Left: 3D Logo + ATTENDIFY (same as landing page) */}
+          <div className="flex items-center gap-2">
+            <span className="block">
+              <svg width="32" height="32" viewBox="0 0 38 38" fill="none" style={{ filter: 'drop-shadow(0 2px 8px #6366f1)' }}>
+                <ellipse cx="19" cy="32" rx="14" ry="5" fill="#6366f1" opacity="0.15" />
+                <path d="M19 5L35 13L19 21L3 13L19 5Z" fill="url(#grad1)" stroke="#6366f1" strokeWidth="2" />
+                <path d="M19 21V32" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" />
+                <defs>
+                  <linearGradient id="grad1" x1="19" y1="5" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#6366f1" />
+                    <stop offset="1" stopColor="#ec4899" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            <span style={{
+              fontWeight: 900,
+              fontSize: "28px",
+              letterSpacing: "-1px",
+              fontFamily: "Poppins, Inter, sans-serif",
+              cursor: "pointer",
+              background: "linear-gradient(135deg, #f59e0b, #ef4444, #6366f1)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              textShadow: "0 2px 4px rgba(0,0,0,0.15), 0 6px 18px rgba(99,102,241,0.25)",
+              filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
+            }}>
+              Admin Dashboard
+            </span>
           </div>
 
-          {/* Top Gradient Bar */}
-          <div className="h-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
-
-          {/* Menu Items */}
-          <Menu
-            menuItemStyles={{
-              button: ({ active }) => ({
-                backgroundColor: active ? 'transparent' : 'transparent',
-                color: 'white',
-                padding: '10px 16px',
-                margin: '4px 12px',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: '500',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  transform: 'translateX(4px)',
-                },
-              }),
-            }}
-          >
-            {Object.entries(tabs).map(([key, { icon, label }]) => (
-              <MenuItem
-                key={key}
-                icon={<span className="text-lg">{icon}</span>}
-                active={activeTab === key}
-                onClick={() => handleTabClick(key)}
-                style={
-                  activeTab === key
-                    ? {
-                        background: 'linear-gradient(90deg, rgb(99, 102, 241), rgb(139, 92, 246))',
-                        boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
-                        transform: 'translateX(4px)',
-                      }
-                    : {}
-                }
-              >
-                {label}
-              </MenuItem>
-            ))}
-          </Menu>
-
-          {/* Logout Button */}
-          <div className="absolute bottom-4 left-0 right-0 px-3">
-            <button
-              onClick={onLogout}
-              className="w-full px-3 py-2.5 text-sm rounded-lg bg-gradient-to-r from-rose-500 to-pink-600 font-semibold 
-                         shadow-md shadow-rose-500/20 hover:shadow-lg hover:shadow-rose-500/30 hover:-translate-y-0.5 
-                         transition-all duration-200 flex items-center justify-center gap-2 text-white"
-            >
-              <span>🚪</span>
-              {!collapsed && <span>Logout</span>}
-            </button>
-          </div>
-        </Sidebar>
-      </div>
+          {/* Right: Notification */}
+          <button className="relative w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center active:scale-95 transition-transform">
+            <span className="text-lg">🔔</span>
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full text-white text-xs font-bold flex items-center justify-center border border-white">3</span>
+          </button>
+        </div>
+      </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden w-full">
-        {/* Top Navigation Bar */}
-        <header className="h-14 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30">
-          {/* ✅ ENHANCED: Better styled header */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600">
-              <span className="text-xl">🛡️</span>
-              <span className="text-white font-bold text-sm sm:text-base">Admin Dashboard</span>
-            </div>
-            <span className="text-gray-300 hidden sm:inline">›</span>
-            <span className="text-gray-700 font-medium text-sm hidden sm:inline">{tabs[activeTab].label}</span>
-          </div>
+      <main className="p-4" style={{ paddingTop: "60px" }}>
+        {renderContent()}
+      </main>
 
-          {/* ✅ KEPT: Notification bell */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            <button className="relative w-9 h-9 rounded-lg bg-gray-100 border border-gray-300 
-                               hover:bg-white hover:border-indigo-500 transition-all flex items-center justify-center">
-              <span className="text-lg">🔔</span>
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-rose-500 to-pink-600 
-                               rounded-full text-white text-xs font-bold flex items-center justify-center 
-                               border border-white">3</span>
+      {/* Floating Bottom Navigation - First 4 tabs + Logout */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-t border-gray-200 shadow-lg">
+        <div className="grid grid-cols-5 gap-1 px-2 py-3">
+          {/* Show first 4 main tabs */}
+          {Object.entries(tabs).slice(0, 4).map(([key, { icon, label }]) => (
+            <button
+              key={key}
+              onClick={() => handleTabClick(key)}
+              className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-all ${
+                activeTab === key
+                  ? 'bg-indigo-100 text-indigo-600 scale-105'
+                  : 'text-gray-600 active:scale-95'
+              }`}
+            >
+              <span className="text-2xl">{icon}</span>
+              <span className="text-xs font-semibold truncate w-full text-center">{label}</span>
             </button>
-          </div>
-        </header>
-
-        {/* Content Area */}
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto bg-gray-50">{renderContent()}</main>
-      </div>
-
-      {/* ✅ Floating Bottom Navigation (Mobile Only) */}
-      <nav className="floating-bottom-nav md:hidden lg:hidden">
-        <button onClick={() => handleTabClick('dashboard')}>
-          📊
-          <span>Home</span>
-        </button>
-
-        <button onClick={() => handleTabClick('students')}>
-          👥
-          <span>Students</span>
-        </button>
-
-        <button onClick={() => handleTabClick('profile')}>
-          📋
-          <span>profile</span>
-        </button>
-
-        <button onClick={() => handleTabClick('geofence')}>
-          🤖
-          <span>geofence</span>
-        </button>
-
-        <button onClick={onLogout}>
-          🚪
-          <span>Logout</span>
-        </button>
+          ))}
+          
+          {/* ✅ LOGOUT BUTTON RESTORED */}
+          <button
+            onClick={onLogout}
+            className="flex flex-col items-center gap-1 px-2 py-2 rounded-lg text-rose-600 active:scale-95 transition-all"
+          >
+            <span className="text-2xl">🚪</span>
+            <span className="text-xs font-semibold">Logout</span>
+          </button>
+        </div>
       </nav>
     </div>
   );

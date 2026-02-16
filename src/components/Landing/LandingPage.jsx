@@ -20,7 +20,7 @@ function LandingPage() {
   }
 
   return (
-    <div className="landing-page" style={{ paddingTop: "0px" }}>
+    <div className="landing-page" style={{ paddingTop: "0px", paddingBottom: "100px" }}>
       {/* Top Navbar - enhanced */}
       <header
         className="landing-navbar w-full bg-white shadow-sm fixed top-0 left-0 z-50"
@@ -75,426 +75,201 @@ function LandingPage() {
             </span>
             
             <span
-  onClick={() => navigate('/')}
-  style={{
-    fontWeight: 900,
-    fontSize: "28px",
-    letterSpacing: "-1px",
-    fontFamily: "Poppins, Inter, sans-serif",
-    cursor: "pointer",
-    background: "linear-gradient(135deg, #f59e0b, #ef4444, #6366f1)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    textShadow: `
-      0 2px 4px rgba(0,0,0,0.15),
-      0 6px 18px rgba(99,102,241,0.25)
-    `,
-    filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
-  }}
->
-  ATTENDIFY
-</span>
-
-
-          </div>
-          {/* Desktop nav links */}
-          <nav className="nav-links hidden md:flex gap-8 font-semibold text-gray-700">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="hover:text-primary-600 transition-colors"
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (link.href === '#home')
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  else
-                    document
-                      .getElementById(link.href.replace('#', ''))
-                      .scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-          {/* Desktop actions */}
-          <div className="nav-actions hidden md:flex gap-2">
-            <button
-              className="px-5 py-2 rounded-full font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow hover:scale-105 transition-all"
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/')}
+              style={{
+                fontWeight: 900,
+                fontSize: "28px",
+                letterSpacing: "-1px",
+                fontFamily: "Poppins, Inter, sans-serif",
+                cursor: "pointer",
+                background: "linear-gradient(135deg, #f59e0b, #ef4444, #6366f1)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textShadow: `
+                  0 2px 4px rgba(0,0,0,0.15),
+                  0 6px 18px rgba(99,102,241,0.25)
+                `,
+                filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
+              }}
             >
-              Login
-            </button>
-            <button
-              className="px-5 py-2 rounded-full font-semibold bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow hover:scale-105 transition-all"
-              onClick={() => navigate('/register')}
-            >
-              Register
-            </button>
+              ATTENDIFY
+            </span>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <HeroSection />
+      {/* Add padding to prevent content from hiding under fixed header */}
+      <div style={{ paddingTop: "60px" }}>
+        {/* Hero Section */}
+        <HeroSection />
 
-      {/* Features Section */}
-      <section id="features" className="features-section">
-        <div className="section-header">
-          <h2>✨ Powerful Features</h2>
-          <p>Everything you need for smart attendance management</p>
-        </div>
-
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon">👤</div>
-            <h3>Face Authentication</h3>
-            <p>
-              Advanced AI-powered face recognition using OpenCV LBPH algorithm
-              ensures accurate student identification in real-time.
-            </p>
-            <ul className="feature-list">
-              <li>✓ Multiple angle capture</li>
-              <li>✓ High accuracy matching</li>
-              <li>✓ Anti-spoofing detection</li>
-            </ul>
+        {/* Features Section */}
+        <section id="features" className="px-4 py-12 bg-gray-50">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-gray-900 mb-2">✨ Powerful Features</h2>
+            <p className="text-gray-600">Everything you need for smart attendance</p>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">📍</div>
-            <h3>Geofencing Security</h3>
-            <p>
-              Location-based verification ensures students are physically
-              present within campus boundaries when marking attendance.
-            </p>
-            <ul className="feature-list">
-              <li>✓ Real-time location tracking</li>
-              <li>✓ Customizable radius</li>
-              <li>✓ Prevents remote proxy</li>
-            </ul>
+          <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
+            {([
+              { icon: '👤', title: 'Face Authentication', desc: 'AI-powered face recognition with 99.9% accuracy' },
+              { icon: '📍', title: 'Geofencing', desc: 'Location-based verification prevents proxy attendance' },
+              { icon: '🔒', title: 'Zero Proxy', desc: 'Dual verification ensures authentic attendance' },
+              { icon: '⚡', title: 'Instant Processing', desc: 'Mark attendance in under 3 seconds' },
+              { icon: '📊', title: 'Admin Dashboard', desc: 'Comprehensive attendance analytics' },
+              { icon: '☁️', title: 'Cloud Storage', desc: 'Secure MongoDB Atlas with auto backups' },
+            ]).map((feature, idx) => (
+              <div key={idx} className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 active:scale-95 transition-transform">
+                <div className="text-5xl mb-3">{feature.icon}</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-sm text-gray-600">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="px-4 py-12 bg-white">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-gray-900 mb-2">🔄 How It Works</h2>
+            <p className="text-gray-600">Simple 4-step process</p>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">🔒</div>
-            <h3>Zero Proxy Attendance</h3>
-            <p>
-              Dual verification system combining face recognition and location
-              ensures impossible proxy attendance scenarios.
-            </p>
-            <ul className="feature-list">
-              <li>✓ One attendance per session</li>
-              <li>✓ Face + Location match</li>
-              <li>✓ Tamper-proof records</li>
-            </ul>
+          <div className="max-w-md mx-auto space-y-4">
+            {([
+              { num: '1', icon: '📝', title: 'Register', desc: 'Create account & capture face images' },
+              { num: '2', icon: '🤖', title: 'AI Training', desc: 'System trains with your face data' },
+              { num: '3', icon: '📸', title: 'Scan Face', desc: 'Mark attendance with live face scan' },
+              { num: '4', icon: '✅', title: 'Verified!', desc: 'Attendance marked successfully' },
+            ]).map((step, idx) => (
+              <div key={idx} className="relative bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 border-2 border-indigo-200">
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                  {step.num}
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">{step.icon}</div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{step.title}</h3>
+                    <p className="text-sm text-gray-600">{step.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Security Section */}
+        <section className="px-4 py-12 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black mb-2">🛡️ Security Measures</h2>
+            <p className="text-gray-300">Multi-layered protection</p>
           </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">⚡</div>
-            <h3>Instant Processing</h3>
-            <p>
-              Lightning-fast attendance marking with real-time face recognition
-              processing and immediate database updates.
-            </p>
-            <ul className="feature-list">
-              <li>✓ Under 3 seconds verification</li>
-              <li>✓ Live camera feed</li>
-              <li>✓ Instant confirmation</li>
-            </ul>
+          <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+            {([
+              { icon: '🎭', label: 'Face Auth' },
+              { icon: '🌍', label: 'GPS Check' },
+              { icon: '⏱️', label: 'Time Lock' },
+              { icon: '🔐', label: 'Encrypted' },
+              { icon: '📱', label: 'Device Track' },
+              { icon: '🚨', label: 'Alerts' },
+            ]).map((item, idx) => (
+              <div key={idx} className="bg-white/10 backdrop-blur-md rounded-xl p-4 text-center border border-white/20">
+                <div className="text-3xl mb-2">{item.icon}</div>
+                <div className="text-sm font-semibold">{item.label}</div>
+              </div>
+            ))}
           </div>
+        </section>
 
-          <div className="feature-card">
-            <div className="feature-icon">📊</div>
-            <h3>Admin Dashboard</h3>
-            <p>
-              Comprehensive admin panel for managing students, viewing reports,
-              and monitoring attendance patterns.
-            </p>
-            <ul className="feature-list">
-              <li>✓ Real-time reports</li>
-              <li>✓ Student management</li>
-              <li>✓ Attendance analytics</li>
-            </ul>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon">☁️</div>
-            <h3>Cloud-Based Storage</h3>
-            <p>
-              Secure MongoDB Atlas cloud storage ensures data safety,
-              scalability, and accessibility from anywhere.
-            </p>
-            <ul className="feature-list">
-              <li>✓ Encrypted data</li>
-              <li>✓ Auto backups</li>
-              <li>✓ 99.9% uptime</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="how-it-works-section">
-        <div className="section-header">
-          <h2>🔄 How It Works</h2>
-          <p>Simple 4-step process for secure attendance</p>
-        </div>
-
-        <div className="steps-container">
-          <div className="step-card">
-            <div className="step-number">1</div>
-            <div className="step-icon">📝</div>
-            <h3>Register</h3>
-            <p>
-              Create your account with basic details and capture multiple face
-              images from different angles
-            </p>
-          </div>
-
-          <div className="step-arrow">→</div>
-          
-          <div className="step-card">
-            <div className="step-number">3</div>
-            <div className="step-icon">📸</div>
-            <h3>Scan Face</h3>
-            <p>
-              During attendance, scan your face live with webcam for instant
-              authentication
-            </p>
-          </div>
-          
-
-          <div className="step-arrow">→</div>
-
-          <div className="step-card">
-            <div className="step-number">2</div>
-            <div className="step-icon">🤖</div>
-            <h3>AI Training</h3>
-            <p>
-              System trains AI model with your face data using advanced machine
-              learning algorithms
-            </p>
-          </div>
-
-          <div className="step-arrow">→</div>
-
-          <div className="step-card">
-            <div className="step-number">4</div>
-            <div className="step-icon">✅</div>
-            <h3>Verified!</h3>
-            <p>
-              Attendance marked after successful face match and location
-              verification
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Security Section */}
-      <section className="security-section">
-        <div className="section-header">
-          <h2>🛡️ Security & Anti-Proxy Measures</h2>
-          <p>Multi-layered security ensures authentic attendance</p>
-        </div>
-
-        <div className="security-grid">
-          <div className="security-item">
-            <div className="security-icon">🎭</div>
-            <h4>Face Authentication</h4>
-            <p>Live face detection prevents photo/video spoofing</p>
-          </div>
-          <div className="security-item">
-            <div className="security-icon">🌍</div>
-            <h4>GPS Verification</h4>
-            <p>Real-time location matching with campus boundaries</p>
-          </div>
-          <div className="security-item">
-            <div className="security-icon">⏱️</div>
-            <h4>Time-Based Sessions</h4>
-            <p>One attendance per session prevents duplicates</p>
-          </div>
-          <div className="security-item">
-            <div className="security-icon">🔐</div>
-            <h4>Encrypted Storage</h4>
-            <p>All data encrypted at rest and in transit</p>
-          </div>
-          <div className="security-item">
-            <div className="security-icon">📱</div>
-            <h4>Device Tracking</h4>
-            <p>Monitor suspicious multiple device logins</p>
-          </div>
-          <div className="security-item">
-            <div className="security-icon">🚨</div>
-            <h4>Admin Alerts</h4>
-            <p>Real-time notifications for anomalies</p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="cta-content">
-          <h2>Ready to Transform Your Attendance System?</h2>
-          <p>
-            Join hundreds of institutions using smart face recognition
-            technology
-          </p>
-          <button className="btn-cta" onClick={() => navigate('/login')}>
+        {/* CTA Section */}
+        <section className="px-4 py-16 bg-gradient-to-br from-indigo-600 to-purple-600 text-white text-center">
+          <h2 className="text-3xl font-black mb-4">Ready to Get Started?</h2>
+          <p className="text-lg mb-8 opacity-90">Join hundreds using smart face recognition</p>
+          <button
+            className="px-8 py-4 bg-white text-indigo-600 rounded-full font-bold text-lg shadow-2xl active:scale-95 transition-transform"
+            onClick={() => navigate('/register')}
+          >
             🚀 Start Free Trial
           </button>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer id="contact" className="landing-footer">
-        <div className="footer-content">
-          <div className="footer-section">
-            <h3>🎓 Attendify</h3>
-            <p>AI Smart Attendance System with Face Recognition</p>
+        {/* Footer */}
+        <footer className="px-4 py-8 bg-gray-900 text-white text-center" style={{ paddingBottom: "40px" }}>
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold mb-2">🎓 Attendify</h3>
+            <p className="text-gray-400 text-sm">AI Smart Attendance System</p>
           </div>
-          <div className="footer-section">
-            <h4>Quick Links</h4>
-            <ul>
-              <li>
-                <a href="#features">Features</a>
-              </li>
-              <li>
-                <a href="#how-it-works">How It Works</a>
-              </li>
-              <li>
-                <a href="#security">Security</a>
-              </li>
-              <li>
-                <a href="#contact">Contact</a>
-              </li>
-            </ul>
-          </div>
-          <div className="footer-section">
-            <h4>Contact</h4>
-            <p>📧 sahilsachan2727@gmail.com</p>
-            {/* Social icons row */}
-            <div className="flex gap-4 mt-3">
-              {/* GitHub */}
-              <a
-                href="https://github.com/sahilsachan27"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="GitHub"
-                style={{ color: '#333' }}
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 2C6.48 2 2 6.58 2 12.26c0 4.51 2.87 8.34 6.84 9.7.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.13-4.56-5 0-1.1.38-2 .99-2.7-.1-.25-.43-1.28.09-2.67 0 0 .82-.27 2.7 1.03a9.18 9.18 0 0 1 2.46-.34c.84 0 1.69.11 2.46.34 1.88-1.3 2.7-1.03 2.7-1.03.52 1.39.19 2.42.09 2.67.62.7.99 1.6.99 2.7 0 3.88-2.34 4.74-4.57 5 .36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"
-                    fill="#333"
-                  />
-                </svg>
-              </a>
-              {/* Instagram */}
-              <a
-                href="https://instagram.com/sahil_sachan_27"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Instagram"
-                style={{ color: '#e1306c' }}
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <rect
-                    x="2"
-                    y="2"
-                    width="20"
-                    height="20"
-                    rx="6"
-                    stroke="#e1306c"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="5"
-                    stroke="#e1306c"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                  <circle cx="17" cy="7" r="1.2" fill="#e1306c" />
-                </svg>
-              </a>
-              {/* LinkedIn */}
-              <a
-                href="https://linkedin.com/in/sahil-sachan-2727"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="LinkedIn"
-                style={{ color: '#0A66C2' }}
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <rect
-                    x="2"
-                    y="2"
-                    width="20"
-                    height="20"
-                    rx="4"
-                    stroke="#0A66C2"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                  <path
-                    d="M8 10v6M8 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm4 2v4m0-4a2 2 0 0 1 4 0v4"
-                    stroke="#0A66C2"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>&copy; 2026 Attendify. All rights reserved.</p>
-          <p className="mt-2 font-semibold text-lg text-white">
-            Developed by{' '}
-            <a
-              href="https://sahilsachan.me"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-yellow-300 hover:text-white font-bold drop-shadow-lg"
-            >
-              Sahil Sachan
+
+          {/* Social Links */}
+          <div className="flex justify-center gap-6 mb-6">
+            <a href="https://github.com/sahilsachan27" target="_blank" rel="noopener noreferrer" className="text-3xl hover:scale-110 transition-transform">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.51 2.87 8.34 6.84 9.7.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.13-4.56-5 0-1.1.38-2 .99-2.7-.1-.25-.43-1.28.09-2.67 0 0 .82-.27 2.7 1.03a9.18 9.18 0 0 1 2.46-.34c.84 0 1.69.11 2.46.34 1.88-1.3 2.7-1.03 2.7-1.03.52 1.39.19 2.42.09 2.67.62.7.99 1.6.99 2.7 0 3.88-2.34 4.74-4.57 5 .36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" />
+              </svg>
             </a>
-          </p>
+            <a href="https://instagram.com/sahil_sachan_27" target="_blank" rel="noopener noreferrer" className="text-3xl hover:scale-110 transition-transform">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="6" stroke="#e1306c" strokeWidth="2" fill="none"/>
+                <circle cx="12" cy="12" r="5" stroke="#e1306c" strokeWidth="2" fill="none"/>
+                <circle cx="17" cy="7" r="1.2" fill="#e1306c"/>
+              </svg>
+            </a>
+            <a href="https://linkedin.com/in/sahil-sachan-2727" target="_blank" rel="noopener noreferrer" className="text-3xl hover:scale-110 transition-transform">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="4" stroke="#0A66C2" strokeWidth="2" fill="none"/>
+                <path d="M8 10v6M8 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm4 2v4m0-4a2 2 0 0 1 4 0v4" stroke="#0A66C2" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div className="text-sm text-gray-400">
+            <p>&copy; 2026 Attendify. All rights reserved.</p>
+            <p className="mt-2">
+              Developed by{' '}
+              <a href="https://sahilsachan.me" target="_blank" rel="noopener noreferrer" className="text-yellow-400 font-bold hover:text-yellow-300">
+                Sahil Sachan
+              </a>
+            </p>
+          </div>
+        </footer>
+      </div>
+
+      {/* ✅ Floating Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-t border-gray-200 shadow-lg">
+        <div className="flex justify-around items-center px-2 py-3 max-w-md mx-auto">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-gray-600 active:scale-95 transition-all"
+          >
+            <span className="text-2xl">🏠</span>
+            <span className="text-xs font-semibold">Home</span>
+          </button>
+
+          <button
+            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            className="flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-gray-600 active:scale-95 transition-all"
+          >
+            <span className="text-2xl">✨</span>
+            <span className="text-xs font-semibold">Features</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/login')}
+            className="flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-blue-100 text-blue-600 scale-105 active:scale-100 transition-all"
+          >
+            <span className="text-2xl">🔐</span>
+            <span className="text-xs font-semibold">Login</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/register')}
+            className="flex flex-col items-center gap-1 px-3 py-2 rounded-lg bg-green-100 text-green-600 scale-105 active:scale-100 transition-all"
+          >
+            <span className="text-2xl">📝</span>
+            <span className="text-xs font-semibold">Register</span>
+          </button>
         </div>
-      </footer>
-
-      {/* Floating Bottom Navigation (Mobile Only) */}
-      <nav className="floating-bottom-nav md:hidden">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          🏠
-          <span>Home</span>
-        </button>
-
-        <button onClick={() =>
-          document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
-        }>
-          ✨
-          <span>Features</span>
-        </button>
-
-        <button onClick={() => navigate('/login')}>
-          🔐
-          <span>Login</span>
-        </button>
-
-        <button onClick={() => navigate('/register')}>
-          📝
-          <span>Register</span>
-        </button>
-
-        <button onClick={() =>
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-        }>
-          🤝
-          <span>Contact</span>
-        </button>
       </nav>
 
       {/* Auth Modal */}

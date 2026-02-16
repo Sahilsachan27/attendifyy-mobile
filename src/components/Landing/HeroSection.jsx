@@ -1,74 +1,63 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import heroPortrait from '../../assets/AI2.png';
 import './HeroSection.css';
 
-export default function HeroSection() {
+function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    <section 
-      className="hero-section" 
-      id="home"
-      style={{
-        paddingTop: '72px' // ✅ Responsive padding that clears navbar on mobile
-      }}
-    >
-      <div className="hero-content" style={{ paddingTop: '0rem' }}> {/* ✅ Extra spacing for content */}
-        <div 
-          className="hero-badge"
-          style={{
-            marginTop: 'clamp(0.2rem, 2vw, 0)', // ✅ Extra top margin on small screens
-            fontSize: 'clamp(0.8rem, 2vw, 0.875rem)', // ✅ Responsive font size
-          }}
-        >
-          🚀AI Smart Attendance System with Face Recognition
+    <section className="px-4 py-6 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white min-h-[60vh] flex items-center">
+      <div className="max-w-md mx-auto text-center">
+        {/* Badge */}
+        <div className="inline-block px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 mb-3 text-sm font-semibold">
+          ✨ AI-Powered Attendance System
         </div>
-        <h1 className="hero-title">
-          Attendify
-          <span className="gradient-text"> AI Smart Attendance</span>
+
+        {/* Title */}
+        <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight">
+          Smart Attendance with{' '}
+          <span className="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+            Face Recognition
+          </span>
         </h1>
-        <p className="hero-description">
-          Experience the future of attendance management with AI-powered face recognition 
-          and geo-fencing technology. Say goodbye to proxy attendance and manual marking.
+
+        {/* Description */}
+        <p className="text-lg mb-8 opacity-90">
+          Zero proxy attendance with AI face recognition and GPS verification. Mark attendance in seconds.
         </p>
-        <div className="hero-buttons">
-          <button className="btn-hero-primary" onClick={() => navigate('/login')}>🚀 Get Started</button>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col gap-3">
           <button
-            className="btn-hero-secondary"
-            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            className="w-full px-6 py-4 bg-white text-indigo-600 rounded-full font-bold text-lg shadow-2xl active:scale-95 transition-transform"
+            onClick={() => navigate('/register')}
           >
-            📖 Learn More
+            🚀 Get Started Free
+          </button>
+          <button
+            className="w-full px-6 py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white rounded-full font-semibold active:scale-95 transition-transform"
+            onClick={() => navigate('/login')}
+          >
+            🔐 Login
           </button>
         </div>
-        <div className="hero-stats">
-          <div className="stat-item">
-            <div className="stat-number">100%</div>
-            <div className="stat-label">Accurate Recognition</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">0</div>
-            <div className="stat-label">Proxy Attendance</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">Real-time</div>
-            <div className="stat-label">Verification</div>
-          </div>
-        </div>
-      </div>
 
-      <div className="hero-illustration">
-        <div className="floating-card">
-          {/* choose a preset: portrait-sm / portrait-md / portrait-lg
-              or override per-instance using inline style:
-              style={{ '--portrait-width': '320px', '--portrait-height': '420px' }} */}
-          <div className="portrait-frame portrait-md">
-            <img src={heroPortrait} alt="Landing hero" />
-            <div className="scan-line"></div>
-            <div className="face-outline"></div>
-          </div>
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4 mt-12">
+          { [
+            { num: '99.9%', label: 'Accuracy' },
+            { num: '<3s', label: 'Speed' },
+            { num: '0', label: 'Proxy' },
+          ].map((stat, idx) => (
+            <div key={idx} className="text-center">
+              <div className="text-2xl font-black">{stat.num}</div>
+              <div className="text-sm opacity-80">{stat.label}</div>
+            </div>
+          )) }
         </div>
       </div>
     </section>
   );
 }
+
+export default HeroSection;
