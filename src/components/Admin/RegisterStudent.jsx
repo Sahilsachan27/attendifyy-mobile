@@ -293,6 +293,7 @@ function RegisterStudent() {
               ref={webcamRef}
               audio={false}
               screenshotFormat="image/jpeg"
+              mirrored={true}
               videoConstraints={{
                 width: 640,
                 height: 480,
@@ -330,7 +331,9 @@ function RegisterStudent() {
               ) : null}
               <button
                 onClick={cancelRegistration}
-                className={`btn-3d w-full py-3 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl font-bold text-sm ${capturedImages.length >= 5 ? 'col-span-2' : 'col-span-2'}`}
+                className={`btn-3d w-full py-3 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl font-bold text-sm ${
+                  capturedImages.length >= 5 ? 'col-span-2' : 'col-span-2'
+                }`}
                 disabled={loading}
               >
                 ❌ Cancel Registration

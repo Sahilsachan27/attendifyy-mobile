@@ -121,6 +121,8 @@ function Register() {
       setError('Please capture at least 5 images.')
       return
     }
+
+    setStep(3)
     setLoading(true)
     setError('')
     setMessage('⏳ Creating account...')
@@ -182,7 +184,7 @@ function Register() {
   }
 
   return (
-    <div className="min-h-[100dvh] flex items-center justify-center bg-background relative overflow-hidden px-4 py-8 pb-24">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 relative overflow-hidden px-4 py-8 pb-24">
       {/* Decorative blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-72 h-72 rounded-full bg-gradient-1 opacity-20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-2 opacity-20 blur-3xl pointer-events-none"></div>
@@ -206,8 +208,8 @@ function Register() {
                   studentIdState.status === 'available'
                     ? 'border-green-500'
                     : studentIdState.status === 'taken'
-                      ? 'border-red-500'
-                      : ''
+                    ? 'border-red-500'
+                    : ''
                 }`}
                 name="student_id"
                 value={formData.student_id}
@@ -221,8 +223,8 @@ function Register() {
                     studentIdState.status === 'available'
                       ? 'text-green-600'
                       : studentIdState.status === 'taken'
-                        ? 'text-red-600'
-                        : 'text-gray-500'
+                      ? 'text-red-600'
+                      : 'text-gray-500'
                   }`}
                 >
                   {studentIdState.message}
@@ -322,6 +324,7 @@ function Register() {
                     ref={webcamRef}
                     audio={false}
                     screenshotFormat="image/jpeg"
+                    mirrored={true}
                     videoConstraints={{
                       width: 640,
                       height: 640,
@@ -425,6 +428,57 @@ function Register() {
               <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-xl text-sm font-semibold shadow-sm mb-4 whitespace-pre-wrap">
                 {error}
               </div>
+            )}
+          </div>
+        )}
+
+        {/* NEW STEP 3: Dedicated Processing/Uploading Screen */}
+        {step === 3 && (
+          <div className="login-form flex flex-col items-center justify-center py-10 text-center min-h-[350px]">
+            {loading && !error && (
+              <div className="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-6 drop-shadow-sm"></div>
+            )}
+
+            {!loading && !error && message.includes('complete') && (
+              <div className="text-6xl mb-6 animate-fade-in drop-shadow-md">
+                🎉
+              </div>
+            )}
+
+            <h3 className="text-2xl font-black text-gray-900 mb-3 drop-shadow-sm">
+              {loading
+                ? 'Processing...'
+                : error
+                ? 'Registration Failed'
+                : 'Success!'}
+            </h3>
+
+            <div className="text-sm font-bold text-gray-600 mb-8 max-w-[250px] mx-auto whitespace-pre-line leading-relaxed">
+              {message || (loading ? 'Uploading data to server...' : '')}
+            </div>
+
+            {error && (
+              <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-xl w-full text-sm font-semibold shadow-sm mb-6 text-left whitespace-pre-line">
+                {error}
+              </div>
+            )}
+
+            {error && (
+              <button
+                onClick={() => setStep(2)}
+                className="btn-3d w-full py-4 bg-gray-100 text-gray-700 rounded-xl font-bold text-sm shadow-sm mt-auto"
+              >
+                ← Go Back and Try Again
+              </button>
+            )}
+
+            {!loading && !error && (
+              <button
+                onClick={() => (window.location.href = '/login')}
+                className="btn-3d w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-black text-sm shadow-[0_4px_15px_rgba(16,185,129,0.3)] mt-auto"
+              >
+                Proceed to Login →
+              </button>
             )}
           </div>
         )}

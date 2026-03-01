@@ -185,7 +185,11 @@ function MarkAttendance({ user }) {
         {/* Step Indicator */}
         <div className="flex items-center justify-center gap-2 mb-6">
           <div
-            className={`flex flex-col sm:flex-row items-center gap-2 px-3 py-2 rounded-xl border ${step >= 1 ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-400 border-gray-100'}`}
+            className={`flex flex-col sm:flex-row items-center gap-2 px-3 py-2 rounded-xl border ${
+              step >= 1
+                ? 'bg-green-50 text-green-700 border-green-200'
+                : 'bg-gray-50 text-gray-400 border-gray-100'
+            }`}
           >
             <span className="text-lg filter drop-shadow-sm">
               {step >= 1 ? '✅' : '1️⃣'}
@@ -195,10 +199,16 @@ function MarkAttendance({ user }) {
             </span>
           </div>
           <div
-            className={`h-0.5 w-4 sm:w-8 ${step >= 2 ? 'bg-green-400' : 'bg-gray-200'}`}
+            className={`h-0.5 w-4 sm:w-8 ${
+              step >= 2 ? 'bg-green-400' : 'bg-gray-200'
+            }`}
           ></div>
           <div
-            className={`flex flex-col sm:flex-row items-center gap-2 px-3 py-2 rounded-xl border ${step >= 2 ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-400 border-gray-100'}`}
+            className={`flex flex-col sm:flex-row items-center gap-2 px-3 py-2 rounded-xl border ${
+              step >= 2
+                ? 'bg-green-50 text-green-700 border-green-200'
+                : 'bg-gray-50 text-gray-400 border-gray-100'
+            }`}
           >
             <span className="text-lg filter drop-shadow-sm">
               {step >= 2 ? '✅' : '2️⃣'}
@@ -208,10 +218,16 @@ function MarkAttendance({ user }) {
             </span>
           </div>
           <div
-            className={`h-0.5 w-4 sm:w-8 ${step >= 3 ? 'bg-blue-400' : 'bg-gray-200'}`}
+            className={`h-0.5 w-4 sm:w-8 ${
+              step >= 3 ? 'bg-blue-400' : 'bg-gray-200'
+            }`}
           ></div>
           <div
-            className={`flex flex-col sm:flex-row items-center gap-2 px-3 py-2 rounded-xl border ${step >= 3 ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-gray-50 text-gray-400 border-gray-100'}`}
+            className={`flex flex-col sm:flex-row items-center gap-2 px-3 py-2 rounded-xl border ${
+              step >= 3
+                ? 'bg-blue-50 text-blue-700 border-blue-200'
+                : 'bg-gray-50 text-gray-400 border-gray-100'
+            }`}
           >
             <span className="text-lg filter drop-shadow-sm">
               {step >= 3 ? '⏳' : '3️⃣'}
@@ -288,6 +304,7 @@ function MarkAttendance({ user }) {
                 ref={webcamRef}
                 audio={false}
                 screenshotFormat="image/jpeg"
+                mirrored={true}
                 videoConstraints={{
                   width: 400,
                   height: 400,
@@ -349,7 +366,9 @@ function MarkAttendance({ user }) {
               <span>📍</span> Location
             </p>
             <p
-              className={`text-sm font-black drop-shadow-sm ${location ? 'text-emerald-600' : 'text-rose-600'}`}
+              className={`text-sm font-black drop-shadow-sm ${
+                location ? 'text-emerald-600' : 'text-rose-600'
+              }`}
             >
               {location ? '✅ Acquired' : '⏳ Pending'}
             </p>

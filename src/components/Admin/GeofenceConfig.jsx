@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './AdminStyles.css'
 
 function GeofenceConfig() {
@@ -8,8 +8,32 @@ function GeofenceConfig() {
     radius: '500',
     enabled: true,
   })
+  const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetchConfig()
+  }, [])
+
+  const fetchConfig = async () => {
+    try {
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
+        }/api/admin/geofence-config`,
+      )
+      if (response.ok) {
+        const data = await response.json()
+        setConfig(data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch config:', err)
+      setError('Failed to load geofencing configuration.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -25,12 +49,46 @@ function GeofenceConfig() {
     setError('')
 
     try {
-      // Here you would save to backend
-      setMessage('✅ Geofence configuration saved successfully!')
-      setTimeout(() => setMessage(''), 3000)
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
+        }/api/admin/geofence-config`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(config),
+        },
+      )
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setMessage('✅ Geofence configuration saved successfully!')
+        setConfig(data.config)
+        setTimeout(() => setMessage(''), 3000)
+      } else {
+        throw new Error(data.error || 'Failed to update configuration')
+      }
     } catch (err) {
-      setError('❌ Failed to save configuration')
+      setError(`❌ ${err.message}`)
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-4 max-w-2xl mx-auto">
+        <h2 className="text-2xl font-black text-gray-900 flex items-center gap-3 drop-shadow-sm">
+          🌍 Geofence Config
+        </h2>
+        <div className="card-3d p-5 sm:p-6 text-center">
+          <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">
+            ⏳ Loading configuration...
+          </span>
+        </div>
+      </div>
+    )
   }
 
   return (

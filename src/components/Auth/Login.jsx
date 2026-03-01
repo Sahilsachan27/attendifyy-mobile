@@ -33,7 +33,7 @@ function Login({ onLogin }) {
   }
 
   return (
-    <div className="min-h-[100dvh] flex items-center justify-center bg-background relative overflow-hidden px-4 py-8">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 relative overflow-hidden px-4 py-8">
       {/* Decorative blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-72 h-72 rounded-full bg-gradient-1 opacity-20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-2 opacity-20 blur-3xl pointer-events-none"></div>
