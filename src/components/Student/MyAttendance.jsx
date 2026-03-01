@@ -1,96 +1,119 @@
-import React, { useState, useEffect } from 'react';
-import { studentAPI } from '../../services/api';
+import React, { useState, useEffect } from 'react'
+import { studentAPI } from '../../services/api'
 
 function MyAttendance({ user }) {
-  const [records, setRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [records, setRecords] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchAttendance();
-  }, []);
+    fetchAttendance()
+  }, [])
 
   const fetchAttendance = async () => {
     try {
-      const response = await studentAPI.getAttendance(user.student_id || user.id);
-      setRecords(response.data.records);
+      const response = await studentAPI.getAttendance(
+        user.student_id || user.id,
+      )
+      setRecords(response.data.records)
     } catch (error) {
-      console.error('Failed to fetch attendance:', error);
+      console.error('Failed to fetch attendance:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="space-y-5">
-      <div className="bg-white rounded-lg shadow-md p-5">
-        <h2 className="text-xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-          📝 My Attendance Records
+      <div className="card-3d p-6">
+        <h2 className="text-2xl font-black text-gray-900 mb-1 flex items-center gap-3 drop-shadow-sm">
+          📝 My Records
         </h2>
-        <p className="text-sm text-gray-600 mb-4">Complete history of your attendance</p>
+        <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-6">
+          Complete history of your attendance
+        </p>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded p-3 border-2 border-green-200">
-            <p className="text-xs font-semibold text-green-700 mb-1">Total Days Present</p>
-            <p className="text-2xl font-black text-green-600">{records.length}</p>
-          </div>
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded p-3 border-2 border-blue-200">
-            <p className="text-xs font-semibold text-blue-700 mb-1">This Month</p>
-            <p className="text-2xl font-black text-blue-600">
-              {records.filter(r => new Date(r.date).getMonth() === new Date().getMonth()).length}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+          <div className="card-3d bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl p-4 border-0 text-white shadow-[0_4px_15px_rgba(16,185,129,0.2)]">
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-green-50">
+              Total Days Present
+            </p>
+            <p className="text-3xl font-black drop-shadow-md">
+              {records.length}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded p-3 border-2 border-purple-200">
-            <p className="text-xs font-semibold text-purple-700 mb-1">Last Updated</p>
-            <p className="text-sm font-black text-purple-600">
-              {records.length > 0 ? new Date(records[0].timestamp).toLocaleDateString() : 'N/A'}
+          <div className="card-3d bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl p-4 border-0 text-white shadow-[0_4px_15px_rgba(59,130,246,0.2)]">
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-blue-50">
+              This Month
+            </p>
+            <p className="text-3xl font-black drop-shadow-md">
+              {
+                records.filter(
+                  (r) => new Date(r.date).getMonth() === new Date().getMonth(),
+                ).length
+              }
+            </p>
+          </div>
+          <div className="card-3d bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl p-4 border-0 text-white shadow-[0_4px_15px_rgba(168,85,247,0.2)] flex flex-col justify-center">
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-purple-50">
+              Last Updated
+            </p>
+            <p className="text-xl font-black drop-shadow-md leading-tight">
+              {records.length > 0
+                ? new Date(records[0].timestamp).toLocaleDateString()
+                : 'N/A'}
             </p>
           </div>
         </div>
 
-        {/* Attendance Table */}
+        {/* Attendance List */}
         {loading ? (
-          <div className="text-center py-8 text-gray-600 text-sm">Loading records...</div>
+          <div className="text-center py-10 font-bold text-gray-500 animate-pulse">
+            Loading records...
+          </div>
         ) : records.length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded">
-            <p className="text-base text-gray-600 mb-1">📭 No attendance records yet</p>
-            <p className="text-sm text-gray-500">Start marking your attendance to see records here</p>
+          <div className="text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+            <p className="text-xl mb-2 filter drop-shadow-sm">📭</p>
+            <p className="text-base font-bold text-gray-700 mb-1">
+              No attendance records yet
+            </p>
+            <p className="text-sm text-gray-500">
+              Start marking your attendance to see records here
+            </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="bg-gray-100 border-b-2 border-gray-200">
-                  <th className="text-left p-2 font-semibold text-gray-700 text-xs">📅 Date</th>
-                  <th className="text-left p-2 font-semibold text-gray-700 text-xs">⏰ Time</th>
-                  <th className="text-left p-2 font-semibold text-gray-700 text-xs">📍 Location</th>
-                  <th className="text-left p-2 font-semibold text-gray-700 text-xs">✅ Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {records.map((record, index) => (
-                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td className="p-2 font-medium text-gray-900 text-sm">{record.date}</td>
-                    <td className="p-2 text-gray-700 text-sm">{record.time}</td>
-                    <td className="p-2">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
-                        📍 Inside Geofence
-                      </span>
-                    </td>
-                    <td className="p-2">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-                        ✅ Present
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="space-y-3">
+            {records.map((record, index) => (
+              <div
+                key={index}
+                className="card-3d p-4 flex flex-row items-center justify-between gap-3 border border-gray-100"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center text-xl filter drop-shadow-sm border border-green-200/50">
+                    ✅
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-gray-900 leading-none">
+                      {record.date}
+                    </p>
+                    <p className="text-xs text-gray-500 font-bold mt-1.5 flex items-center gap-1">
+                      <span className="text-indigo-400">🕒</span>
+                      {record.time}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <span className="inline-flex items-center px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-sm border border-indigo-100/50">
+                    📍 Campus
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default MyAttendance;
+export default MyAttendance

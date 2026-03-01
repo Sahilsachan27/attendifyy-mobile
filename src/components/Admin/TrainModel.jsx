@@ -1,53 +1,81 @@
-import React, { useState } from 'react';
-import { adminAPI } from '../../services/api';
-import './AdminStyles.css';
+import React, { useState } from 'react'
+import { adminAPI } from '../../services/api'
+import './AdminStyles.css'
 
 function TrainModel() {
-  const [training, setTraining] = useState(false);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [training, setTraining] = useState(false)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
 
   const handleTrain = async () => {
-    setMessage('');
-    setError('');
-    setTraining(true);
+    setMessage('')
+    setError('')
+    setTraining(true)
 
     try {
-      await adminAPI.trainModel();
-      setMessage('Face recognition model trained successfully!');
+      await adminAPI.trainModel()
+      setMessage('Face recognition model trained successfully!')
     } catch (err) {
-      setError(err.response?.data?.error || 'Training failed');
+      setError(err.response?.data?.error || 'Training failed')
     } finally {
-      setTraining(false);
+      setTraining(false)
     }
-  };
+  }
 
   return (
-    <div className="admin-section">
-      <h2>Train Face Recognition Model</h2>
-      
-      <div className="train-info">
-        <h3>ℹ️ Training Instructions</h3>
-        <ul>
-          <li>Ensure all students have face images uploaded</li>
-          <li>Training may take a few minutes depending on the number of students</li>
-          <li>Train the model after adding new students</li>
-          <li>The model will be saved automatically after training</li>
-        </ul>
+    <div className="space-y-4 max-w-2xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        <h2 className="text-2xl font-black text-gray-900 flex items-center gap-3 drop-shadow-sm">
+          🤖 Train AI Model
+        </h2>
       </div>
 
-      <button
-        onClick={handleTrain}
-        disabled={training}
-        className="btn-primary btn-large"
-      >
-        {training ? '⏳ Training Model...' : '🤖 Train Model'}
-      </button>
+      <div className="card-3d p-5 sm:p-6 space-y-6">
+        <div className="bg-blue-50/80 border border-blue-200 rounded-2xl p-5 relative shadow-inner">
+          <h3 className="text-[11px] font-black text-blue-800 mb-3 flex items-center gap-2 uppercase tracking-wider">
+            <span>ℹ️</span> Training Instructions
+          </h3>
+          <ul className="text-[11px] font-bold text-blue-700/80 space-y-2 ml-1">
+            <li className="flex gap-2">
+              <span>•</span> Ensure all students have face images uploaded
+            </li>
+            <li className="flex gap-2">
+              <span>•</span> Training may take a few minutes depending on the
+              number of students
+            </li>
+            <li className="flex gap-2">
+              <span>•</span> Train the model after adding new students
+            </li>
+            <li className="flex gap-2">
+              <span>•</span> The model will be saved automatically after
+              training
+            </li>
+          </ul>
+        </div>
 
-      {message && <div className="success-message">{message}</div>}
-      {error && <div className="error-message">{error}</div>}
+        <div className="pt-2">
+          <button
+            onClick={handleTrain}
+            disabled={training}
+            className="btn-3d w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(99,102,241,0.3)] transition-all flex items-center justify-center gap-2"
+          >
+            {training ? '⏳ Training Model...' : '🤖 Start Training Model'}
+          </button>
+        </div>
+
+        {message && (
+          <div className="mt-4 p-3 bg-green-50 text-green-600 rounded-xl text-sm font-bold flex items-center gap-2 border border-green-100 whitespace-pre-wrap">
+            ✨ {message}
+          </div>
+        )}
+        {error && (
+          <div className="mt-4 p-3 bg-red-50 text-red-600 rounded-xl text-sm font-bold flex items-center gap-2 border border-red-100">
+            ⚠️ {error}
+          </div>
+        )}
+      </div>
     </div>
-  );
+  )
 }
 
-export default TrainModel;
+export default TrainModel
