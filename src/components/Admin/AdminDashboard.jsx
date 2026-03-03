@@ -14,10 +14,10 @@ function AdminDashboard({ user, onLogout }) {
   const tabs = {
     dashboard: { icon: '📊', label: 'Dashboard' },
     students: { icon: '👥', label: 'Students' },
-    register: { icon: '➕', label: 'Register' },
+    geofence: { icon: '🌍', label: 'Geofencing' },
     attendance: { icon: '📋', label: 'Attendance' },
     faceauth: { icon: '🎭', label: 'Face Auth' },
-    geofence: { icon: '🌍', label: 'Geofence' },
+    register: { icon: '➕', label: 'Register' },
     train: { icon: '🤖', label: 'Train AI' },
     profile: { icon: '👤', label: 'Profile' },
   }
