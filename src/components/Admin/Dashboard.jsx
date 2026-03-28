@@ -72,12 +72,12 @@ function Dashboard() {
         ),
     },
     {
-      icon: '📊',
-      label: 'View Attendance',
+      icon: '🕵️',
+      label: 'Profile',
       gradient: 'from-emerald-500 to-teal-600',
       onClick: () =>
         window.dispatchEvent(
-          new CustomEvent('navigateToTab', { detail: 'attendance' }),
+          new CustomEvent('navigateToTab', { detail: 'profile' }),
         ),
     },
     {
@@ -103,12 +103,18 @@ function Dashboard() {
   return (
     <div className="space-y-4 sm:space-y-5">
       {/* Stats Slider - Responsive height */}
-      <div className="relative h-36 sm:h-44 card-3d overflow-hidden border-0">
+      <div className="relative h-36 sm:h-44 card-3d-modern overflow-hidden border-0">
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} flex items-center justify-center 
-                       transition-all duration-700 ${index === currentSlide ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}
+            className={`absolute inset-0 bg-gradient-to-br ${
+              slide.gradient
+            } flex items-center justify-center 
+                       transition-all duration-700 ${
+                         index === currentSlide
+                           ? 'opacity-100 translate-x-0'
+                           : 'opacity-0 translate-x-full'
+                       }`}
           >
             {/* Decorative background blobs */}
             <div className="absolute top-[-50%] right-[-10%] w-40 h-40 rounded-full bg-white/20 blur-2xl pointer-events-none fade-in"></div>
@@ -130,7 +136,11 @@ function Dashboard() {
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`h-2.5 rounded-full transition-all duration-300 drop-shadow-sm
-                         ${index === currentSlide ? 'w-8 bg-white' : 'w-2.5 bg-white/40'}`}
+                         ${
+                           index === currentSlide
+                             ? 'w-8 bg-white'
+                             : 'w-2.5 bg-white/40'
+                         }`}
             />
           ))}
         </div>
@@ -159,7 +169,10 @@ function Dashboard() {
                 value: stats.presentCount,
                 sublabel:
                   stats.totalStudents > 0
-                    ? `${((stats.presentCount / stats.totalStudents) * 100).toFixed(1)}%`
+                    ? `${(
+                        (stats.presentCount / stats.totalStudents) *
+                        100
+                      ).toFixed(1)}%`
                     : '0%',
                 color: 'emerald',
               },
@@ -169,7 +182,10 @@ function Dashboard() {
                 value: stats.absentCount,
                 sublabel:
                   stats.totalStudents > 0
-                    ? `${((stats.absentCount / stats.totalStudents) * 100).toFixed(1)}%`
+                    ? `${(
+                        (stats.absentCount / stats.totalStudents) *
+                        100
+                      ).toFixed(1)}%`
                     : '0%',
                 color: 'rose',
               },
@@ -183,7 +199,7 @@ function Dashboard() {
             ].map((stat, idx) => (
               <div
                 key={idx}
-                className={`card-3d p-4 sm:p-5 border-l-4 border-${stat.color}-500 hover:-translate-y-1 transition-transform cursor-pointer`}
+                className={`card-3d-modern p-4 sm:p-5 border-l-4 border-${stat.color}-500  transition-transform cursor-pointer`}
               >
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                   <div className={`text-3xl sm:text-4xl filter drop-shadow-sm`}>
@@ -208,7 +224,7 @@ function Dashboard() {
           </div>
 
           {/* System Status - Responsive grid */}
-          <div className="card-3d p-5 sm:p-6 mb-4">
+          <div className="card-3d-modern p-5 sm:p-6 mb-4">
             <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-4 sm:mb-5 flex items-center gap-2 drop-shadow-sm">
               🔧 System Status
             </h3>
@@ -251,7 +267,9 @@ function Dashboard() {
                       {item.title}
                     </h4>
                     <p
-                      className={`text-sm font-black leading-tight ${item.active ? 'text-emerald-600' : 'text-rose-600'}`}
+                      className={`text-sm font-black leading-tight ${
+                        item.active ? 'text-emerald-600' : 'text-rose-600'
+                      }`}
                     >
                       {item.status}
                     </p>
@@ -262,7 +280,7 @@ function Dashboard() {
           </div>
 
           {/* Quick Actions - Now with click handlers */}
-          <div className="card-3d p-5 sm:p-6 mb-4">
+          <div className="card-3d-modern p-5 sm:p-6 mb-4">
             <h3 className="text-lg sm:text-xl font-black text-gray-900 mb-4 sm:mb-5 flex items-center gap-2 drop-shadow-sm">
               ⚡ Quick Actions
             </h3>

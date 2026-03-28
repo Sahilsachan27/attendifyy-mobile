@@ -48,7 +48,7 @@ function AdminProfile({ user }) {
       </div>
 
       {/* Profile Info Card */}
-      <div className="card-3d p-6 relative overflow-hidden mb-4">
+      <div className="card-3d-modern p-6 relative overflow-hidden mb-4">
         {/* Background Blob */}
         <div className="absolute top-[-20%] right-[-10%] w-40 h-40 rounded-full bg-gradient-1 opacity-10 blur-2xl pointer-events-none"></div>
 
@@ -71,7 +71,7 @@ function AdminProfile({ user }) {
       </div>
 
       {/* Account Details */}
-      <div className="card-3d p-5 sm:p-6 mb-4">
+      <div className="card-3d-modern p-5 sm:p-6 mb-4">
         <h3 className="text-lg font-black text-gray-900 mb-4 drop-shadow-sm flex items-center gap-2">
           📋 Account Details
         </h3>
@@ -112,7 +112,7 @@ function AdminProfile({ user }) {
       </div>
 
       {/* Change Password Section */}
-      <div className="card-3d p-5 sm:p-6 mb-4">
+      <div className="card-3d-modern p-5 sm:p-6 mb-4">
         <h3 className="text-lg font-black text-gray-900 mb-4 drop-shadow-sm flex items-center gap-2">
           🔒 Change Password
         </h3>
@@ -191,7 +191,7 @@ function AdminProfile({ user }) {
           <div className="pt-2">
             <button
               type="submit"
-              className="btn-3d w-full py-4 bg-gray-900 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all flex items-center justify-center gap-2 hover:bg-gray-800"
+              className="btn-3d w-full py-4 bg-gray-900 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all flex items-center justify-center gap-2 "
             >
               🔄 Update Password
             </button>

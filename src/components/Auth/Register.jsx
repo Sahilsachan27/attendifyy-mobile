@@ -189,7 +189,7 @@ function Register() {
       <div className="absolute top-[-10%] left-[-10%] w-72 h-72 rounded-full bg-gradient-1 opacity-20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-2 opacity-20 blur-3xl pointer-events-none"></div>
 
-      <div className="card-3d w-full max-w-[450px] p-6 sm:p-8 relative z-10 mx-auto bg-white/80 backdrop-blur-xl">
+      <div className="card-3d-modern w-full max-w-[450px] p-6 sm:p-8 relative z-10 mx-auto bg-white/80 backdrop-blur-xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-black text-gray-900 tracking-tight drop-shadow-sm mb-2">
             ✍️ Registration
@@ -204,7 +204,7 @@ function Register() {
             <div className="form-group">
               <label>📝 Student ID</label>
               <input
-                className={`input-field ${
+                className={`input-3d ${
                   studentIdState.status === 'available'
                     ? 'border-green-500'
                     : studentIdState.status === 'taken'
@@ -235,7 +235,7 @@ function Register() {
             <div className="form-group">
               <label>👤 Full Name</label>
               <input
-                className="input-field"
+                className="input-3d"
                 name="name"
                 value={formData.name}
                 onChange={onChange}
@@ -246,7 +246,7 @@ function Register() {
             <div className="form-group">
               <label>📧 Email</label>
               <input
-                className="input-field"
+                className="input-3d"
                 type="email"
                 name="email"
                 value={formData.email}
@@ -258,7 +258,7 @@ function Register() {
             <div className="form-group">
               <label>🔒 Password</label>
               <input
-                className="input-field"
+                className="input-3d"
                 type="password"
                 name="password"
                 value={formData.password}
@@ -271,7 +271,7 @@ function Register() {
             <div className="form-group">
               <label>🏢 Department</label>
               <input
-                className="input-field"
+                className="input-3d"
                 name="department"
                 value={formData.department}
                 onChange={onChange}
@@ -282,7 +282,7 @@ function Register() {
             <div className="form-group">
               <label>📚 Year</label>
               <select
-                className="input-field"
+                className="input-3d"
                 name="year"
                 value={formData.year}
                 onChange={onChange}
@@ -302,7 +302,7 @@ function Register() {
               </div>
             )}
             <button
-              className="btn-3d w-full py-4 mt-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl font-black text-lg shadow-[0_8px_20px_rgba(99,102,241,0.4)] disabled:opacity-50 disabled:shadow-none"
+              className="btn-3d-primary w-full disabled:opacity-50"
               type="button"
               onClick={() => setStep(2)}
               disabled={studentIdState.status === 'taken'}
@@ -336,7 +336,7 @@ function Register() {
                 </div>
                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4">
                   <button
-                    className="btn-3d flex-1 py-3 bg-indigo-50 text-indigo-700 border border-indigo-100/50 rounded-xl font-bold min-w-[120px] shadow-sm disabled:opacity-50"
+                    className="btn-3d-secondary flex-1 min-w-[120px] disabled:opacity-50"
                     type="button"
                     onClick={() => {
                       const shot = webcamRef.current?.getScreenshot()
@@ -351,7 +351,7 @@ function Register() {
                   </button>
                   <div className="flex w-full sm:w-auto gap-3 flex-1">
                     <button
-                      className="btn-3d flex-1 py-3 bg-gray-50 text-gray-600 border border-gray-200 rounded-xl font-bold min-w-[100px] shadow-sm disabled:opacity-50"
+                      className="btn-3d-secondary flex-1 min-w-[100px] disabled:opacity-50"
                       type="button"
                       onClick={() => setStep(1)}
                       disabled={loading}
@@ -359,7 +359,7 @@ function Register() {
                       ← Back
                     </button>
                     <button
-                      className="btn-3d flex-1 py-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl font-black shadow-[0_4px_15px_rgba(16,185,129,0.3)] min-w-[100px] disabled:opacity-50 disabled:shadow-none"
+                      className="btn-3d-success flex-1 min-w-[100px] disabled:opacity-50"
                       type="button"
                       onClick={submitRegistration}
                       disabled={loading || images.length < 5}
@@ -387,7 +387,7 @@ function Register() {
                 </div>
                 <div className="flex gap-3 mt-4">
                   <button
-                    className="btn-3d flex-1 py-3 bg-gray-50 text-gray-600 border border-gray-200 rounded-xl font-bold shadow-sm disabled:opacity-50"
+                    className="btn-3d-secondary flex-1 min-w-[100px] disabled:opacity-50"
                     type="button"
                     onClick={() => setStep(1)}
                     disabled={loading}
@@ -395,7 +395,7 @@ function Register() {
                     ← Back
                   </button>
                   <button
-                    className="btn-3d flex-1 py-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-xl font-black shadow-[0_4px_15px_rgba(16,185,129,0.3)] disabled:opacity-50 disabled:shadow-none"
+                    className="btn-3d-success flex-1 min-w-[100px] disabled:opacity-50"
                     type="button"
                     onClick={submitRegistration}
                     disabled={loading || images.length < 5}
@@ -466,7 +466,7 @@ function Register() {
             {error && (
               <button
                 onClick={() => setStep(2)}
-                className="btn-3d w-full py-4 bg-gray-100 text-gray-700 rounded-xl font-bold text-sm shadow-sm mt-auto"
+                className="btn-3d-secondary w-full"
               >
                 ← Go Back and Try Again
               </button>
@@ -475,7 +475,7 @@ function Register() {
             {!loading && !error && (
               <button
                 onClick={() => (window.location.href = '/login')}
-                className="btn-3d w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-black text-sm shadow-[0_4px_15px_rgba(16,185,129,0.3)] mt-auto"
+                className="btn-3d-success w-full"
               >
                 Proceed to Login →
               </button>

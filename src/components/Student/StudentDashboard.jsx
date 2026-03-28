@@ -42,21 +42,18 @@ function StudentDashboard({ user, onLogout }) {
       </div>
       {/* ✅ FIXED: Header matching Landing Page style */}
       <header
-        className="w-full bg-white shadow-sm fixed top-0 left-0 z-50"
+        className="w-full glass-3d fixed top-0 left-0 z-50 border-b border-white/40"
         style={{ paddingTop: '32px' }}
       >
-        <div className="flex items-center justify-between px-4 py-2">
+        <div className="flex items-center justify-between px-4 py-3">
           {/* Left: 3D Logo + ATTENDIFY (same as landing page) */}
           <div className="flex items-center gap-2">
             {/* Attendify App Icon */}
-            <span className="block w-8 h-8 flex-shrink-0">
+            <span className="block w-9 h-9 flex-shrink-0 bg-white rounded-xl shadow-sm p-1 border border-gray-100">
               <img
                 src="/attendifyy.png"
                 alt="Attendify Logo"
-                className="w-full h-full object-contain"
-                style={{
-                  filter: 'drop-shadow(0 2px 8px rgba(99,102,241,0.5))',
-                }}
+                className="w-full h-full object-contain filter drop-shadow-sm"
               />
             </span>
             <span
@@ -69,22 +66,22 @@ function StudentDashboard({ user, onLogout }) {
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
                 background:
-                  'linear-gradient(135deg, #f59e0b, #ef4444, #6366f1)',
+                  'linear-gradient(135deg, #4f46e5, #ec4899, #f43f5e)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 textShadow:
-                  '0 2px 4px rgba(0,0,0,0.15), 0 6px 18px rgba(99,102,241,0.25)',
-                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.2))',
+                  '0 2px 4px rgba(0,0,0,0.05), 0 6px 18px rgba(99,102,241,0.15)',
+                filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.1))',
               }}
             >
-              Student Dashboard
+              Dashboard
             </span>
           </div>
 
           {/* Right: Notification */}
-          <button className="relative w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center active:scale-95 transition-transform">
-            <span className="text-lg">🔔</span>
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full text-white text-xs font-bold flex items-center justify-center border border-white">
+          <button className="relative w-10 h-10 rounded-xl bg-white/60 shadow-sm border border-white flex items-center justify-center active:scale-95 transition-transform">
+            <span className="text-xl filter drop-shadow-sm">🔔</span>
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full text-white text-[9px] font-black flex items-center justify-center shadow-lg border border-white">
               3
             </span>
           </button>
@@ -92,12 +89,12 @@ function StudentDashboard({ user, onLogout }) {
       </header>
 
       {/* Main Content */}
-      <main className="p-4 relative z-10" style={{ paddingTop: '60px' }}>
+      <main className="p-4 relative z-10" style={{ paddingTop: '80px' }}>
         {renderContent()}
       </main>
 
       {/* Floating Bottom Navigation - 4 buttons + Logout */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 glass border-t border-white/40 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] rounded-t-[2rem] pt-3 pb-6 px-2">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 glass-3d border-t border-white/60 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[2.5rem] pt-3 pb-6 px-2">
         <div className="flex justify-around items-center max-w-md mx-auto relative">
           {Object.entries(tabs).map(([key, { icon, label }]) => (
             <button

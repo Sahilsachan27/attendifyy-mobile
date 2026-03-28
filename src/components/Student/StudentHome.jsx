@@ -25,139 +25,128 @@ function StudentHome({ user }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 sm:space-y-5 pb-8">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-br from-emerald-100 to-teal-50 card-3d border border-emerald-200 p-6 text-gray-900 shadow-[0_10px_30px_rgba(16,185,129,0.15)] relative overflow-hidden">
-        <div className="absolute top-[-50%] right-[-10%] w-40 h-40 rounded-full bg-emerald-400/20 blur-2xl pointer-events-none"></div>
+      <div className="relative h-36 sm:h-44 card-3d-modern overflow-hidden border-0 shadow-[0_10px_30px_rgba(16,185,129,0.15)] bg-gradient-to-br from-emerald-400 to-teal-500 flex flex-col justify-end p-5 sm:p-6 text-white group">
+        <div className="absolute top-[-50%] right-[-10%] w-48 h-48 rounded-full bg-white/20 blur-2xl pointer-events-none group-active:bg-white/30 transition-colors"></div>
         <div className="relative z-10">
-          <h1 className="text-2xl font-black mb-1 text-emerald-950 drop-shadow-sm">
-            👋 Welcome, {user.name}!
+          <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest mb-3 border border-white/30 drop-shadow-sm">
+            🎓 Student Portal
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-black leading-none drop-shadow-md tracking-tight">
+            Hi, {user.name.split(' ')[0]}!
           </h1>
-          <p className="text-sm text-emerald-800 font-bold uppercase tracking-wide">
-            Student Dashboard • Smart Attendance
-          </p>
         </div>
+        <div className="absolute -top-6 -right-6 text-8xl filter drop-shadow-lg opacity-40">👋</div>
       </div>
 
-      {/* Student Info Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="card-3d p-4 border-l-4 border-indigo-500 flex items-center gap-4">
-          <div className="text-3xl filter drop-shadow-sm">🎓</div>
+      {/* Quick Info Grid */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="card-3d-modern p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2">
+          <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-2xl filter drop-shadow-sm">🆔</div>
           <div>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">
-              Student ID
-            </p>
-            <p className="text-lg font-black text-gray-900 leading-none mt-1">
-              {user.student_id || user.id}
-            </p>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">ID Number</p>
+            <p className="text-sm font-black text-gray-900 leading-none">{user.student_id || user.id}</p>
           </div>
         </div>
 
-        <div className="card-3d p-4 border-l-4 border-purple-500 flex items-center gap-4">
-          <div className="text-3xl filter drop-shadow-sm">🏢</div>
+        <div className="card-3d-modern p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2">
+          <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-2xl filter drop-shadow-sm">📚</div>
           <div>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">
-              Department
-            </p>
-            <p className="text-lg font-black text-gray-900 leading-none mt-1">
-              {user.department || 'Not Set'}
-            </p>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Course</p>
+            <p className="text-sm font-black text-gray-900 leading-none">{user.department || 'Not Set'}</p>
           </div>
         </div>
 
-        <div className="card-3d p-4 border-l-4 border-pink-500 flex items-center gap-4">
-          <div className="text-3xl filter drop-shadow-sm">📚</div>
+        <div className="card-3d-modern p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2">
+          <div className="w-12 h-12 rounded-2xl bg-pink-50 border border-pink-100 flex items-center justify-center text-2xl filter drop-shadow-sm">🎓</div>
           <div>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">
-              Year / Class
-            </p>
-            <p className="text-lg font-black text-gray-900 leading-none mt-1">
-              Year {user.year || 'N/A'}
-            </p>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Year</p>
+            <p className="text-sm font-black text-gray-900 leading-none">Year {user.year || 'N/A'}</p>
           </div>
         </div>
       </div>
 
       {/* Today's Attendance Status */}
-      <div className="card-3d p-6">
-        <h2 className="text-xl font-black text-gray-900 mb-4 flex items-center gap-2">
-          📅 Today's Attendance
+      <div className="card-3d-modern p-5 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-4 sm:mb-5 flex items-center gap-2 drop-shadow-sm">
+          📅 Today's Log
         </h2>
 
         {loading ? (
-          <div className="text-center py-8 text-gray-500 font-semibold animate-pulse">
-            Loading status...
+          <div className="flex flex-col items-center justify-center py-6 gap-3">
+            <div className="w-8 h-8 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin"></div>
+            <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Checking records...</span>
           </div>
         ) : todayStatus ? (
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-5 shadow-inner">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="text-4xl filter drop-shadow-sm">✅</div>
-              <div>
-                <h3 className="text-xl font-black text-green-700">Present</h3>
-                <p className="text-xs font-bold text-green-600 uppercase tracking-wide">
-                  Attendance Marked
-                </p>
+          <div className="relative overflow-hidden group rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white shadow-[0_8px_20px_rgba(16,185,129,0.2)]">
+            <div className="absolute top-[-20%] right-[-10%] w-40 h-40 rounded-full bg-white/20 blur-xl pointer-events-none"></div>
+            
+            <div className="flex items-start justify-between relative z-10 mb-6">
+              <div className="flex gap-4 items-center">
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm border border-emerald-100 rotate-3 transform">✅</div>
+                <div>
+                  <h3 className="text-2xl font-black drop-shadow-sm">Present</h3>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-black uppercase tracking-wider mt-1 border border-white/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-300"></span> Marked
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              <div className="bg-white rounded-xl p-3 shadow-sm border border-green-100 flex flex-col justify-center">
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">
-                  Time
-                </p>
-                <p className="text-base font-black text-gray-800 leading-none">
-                  {todayStatus.time}
-                </p>
+
+            <div className="grid grid-cols-2 gap-3 relative z-10">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                <p className="text-[10px] text-emerald-100 font-bold uppercase tracking-widest mb-1">Time Logged</p>
+                <p className="text-lg font-black tracking-wide">{todayStatus.time}</p>
               </div>
-              <div className="bg-white rounded-xl p-3 shadow-sm border border-green-100 flex flex-col justify-center">
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">
-                  Date
-                </p>
-                <p className="text-base font-black text-gray-800 leading-none">
-                  {todayStatus.date}
-                </p>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                <p className="text-[10px] text-emerald-100 font-bold uppercase tracking-widest mb-1">Date</p>
+                <p className="text-lg font-black tracking-wide">{todayStatus.date}</p>
               </div>
             </div>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-red-50 to-rose-50 border border-red-200 rounded-2xl p-5 shadow-inner">
-            <div className="flex items-center gap-4">
-              <div className="text-4xl filter drop-shadow-sm">❌</div>
+          <div className="relative overflow-hidden group rounded-3xl bg-gradient-to-br from-rose-500 to-red-600 p-6 text-white shadow-[0_8px_20px_rgba(244,63,94,0.2)] flex items-center justify-between">
+            <div className="absolute top-[-20%] right-[-10%] w-40 h-40 rounded-full bg-white/20 blur-xl pointer-events-none"></div>
+            
+            <div className="flex items-center gap-5 relative z-10">
+              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-md border-2 border-rose-100 -rotate-3 transform">⚠️</div>
               <div>
-                <h3 className="text-xl font-black text-red-700">Not Marked</h3>
-                <p className="text-xs font-bold text-red-600 uppercase tracking-wide">
-                  Please mark attendance
-                </p>
+                <h3 className="text-2xl font-black drop-shadow-md leading-none mb-1.5">Absent</h3>
+                <span className="inline-flex px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg text-xs font-black uppercase tracking-wide border border-white/30">
+                  Not Marked Yet
+                </span>
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* System Status */}
-      <div className="card-3d p-6">
-        <h2 className="text-xl font-black text-gray-900 mb-4 flex items-center gap-2">
-          🔧 System Status
+      {/* Hardware Status */}
+      <div className="card-3d-modern p-5 sm:p-6">
+        <h2 className="text-lg sm:text-xl font-black text-gray-900 mb-4 sm:mb-5 flex items-center gap-2 drop-shadow-sm">
+          🔧 Hardware Status
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="flex items-center gap-3 p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100">
-            <div className="text-3xl filter drop-shadow-sm">👤</div>
-            <div>
-              <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">
-                Face Scan
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="flex items-center gap-4 p-4 bg-gray-50/70 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="text-3xl filter drop-shadow-sm">📸</div>
+            <div className="flex-1">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                Camera Module
               </p>
-              <p className="text-sm text-indigo-700 font-black">
-                ✅ Active & Ready
+              <p className="text-sm text-indigo-600 font-black leading-none">
+                ✅ Ready for Auth
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3 p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100">
-            <div className="text-3xl filter drop-shadow-sm">📍</div>
-            <div>
-              <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">
-                Location Check
+          <div className="flex items-center gap-4 p-4 bg-gray-50/70 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="text-3xl filter drop-shadow-sm">🌍</div>
+            <div className="flex-1">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                Location Services
               </p>
-              <p className="text-sm text-indigo-700 font-black">
-                ✅ Monitoring
+              <p className="text-sm text-emerald-600 font-black leading-none">
+                ✅ Active
               </p>
             </div>
           </div>

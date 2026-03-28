@@ -147,7 +147,7 @@ function RegisterStudent() {
       {!showCamera ? (
         <form
           onSubmit={handleRegister}
-          className="card-3d p-5 sm:p-6 space-y-4"
+          className="card-3d-modern p-5 sm:p-6 space-y-4"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
@@ -162,7 +162,7 @@ function RegisterStudent() {
                 placeholder="STU0001"
                 required
                 disabled={loading}
-                className="w-full bg-gray-50/50 border-2 border-gray-100 rounded-xl py-3 px-4 font-bold text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all shadow-inner"
+                className="input-3d"
               />
             </div>
             <div className="space-y-1.5">
@@ -177,7 +177,7 @@ function RegisterStudent() {
                 placeholder="John Doe"
                 required
                 disabled={loading}
-                className="w-full bg-gray-50/50 border-2 border-gray-100 rounded-xl py-3 px-4 font-bold text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all shadow-inner"
+                className="input-3d"
               />
             </div>
           </div>
@@ -195,7 +195,7 @@ function RegisterStudent() {
                 placeholder="student@example.com"
                 required
                 disabled={loading}
-                className="w-full bg-gray-50/50 border-2 border-gray-100 rounded-xl py-3 px-4 font-bold text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all shadow-inner"
+                className="input-3d"
               />
             </div>
             <div className="space-y-1.5">
@@ -211,7 +211,7 @@ function RegisterStudent() {
                 minLength="6"
                 required
                 disabled={loading}
-                className="w-full bg-gray-50/50 border-2 border-gray-100 rounded-xl py-3 px-4 font-bold text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all shadow-inner"
+                className="input-3d"
               />
             </div>
           </div>
@@ -229,7 +229,7 @@ function RegisterStudent() {
                 placeholder="Computer Science"
                 required
                 disabled={loading}
-                className="w-full bg-gray-50/50 border-2 border-gray-100 rounded-xl py-3 px-4 font-bold text-sm focus:outline-none focus:border-indigo-400 focus:bg-white transition-all shadow-inner"
+                className="input-3d"
               />
             </div>
             <div className="space-y-1.5">
@@ -242,7 +242,7 @@ function RegisterStudent() {
                 onChange={handleInputChange}
                 required
                 disabled={loading}
-                className="w-full bg-gray-50/50 border-2 border-gray-100 rounded-xl py-3 px-4 font-bold text-sm text-gray-700 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all shadow-inner cursor-pointer"
+                className="input-3d"
               >
                 <option value="">Select Year</option>
                 <option value="1">First Year</option>
@@ -267,7 +267,7 @@ function RegisterStudent() {
           <div className="pt-2">
             <button
               type="submit"
-              className="btn-3d w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(99,102,241,0.3)] transition-all"
+              className="btn-3d-primary w-full disabled:opacity-50"
               disabled={loading}
             >
               {loading ? '⏳ Registering...' : '✅ Register Student'}
@@ -275,7 +275,7 @@ function RegisterStudent() {
           </div>
         </form>
       ) : (
-        <div className="card-3d p-5 sm:p-6 space-y-5">
+        <div className="card-3d-modern p-5 sm:p-6 space-y-5">
           <div className="text-center">
             <h3 className="text-xl font-black text-gray-900 mb-1 drop-shadow-sm">
               📸 Capture Face Images for
@@ -313,7 +313,7 @@ function RegisterStudent() {
           <div className="grid gap-3 pt-2">
             <button
               onClick={captureImage}
-              className="btn-3d w-full py-4 bg-gray-900 text-white rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2"
+              className="btn-3d-secondary w-full disabled:opacity-50"
               disabled={loading || capturedImages.length >= 10}
             >
               <span className="text-xl">📷</span> Capture Image (
@@ -323,7 +323,7 @@ function RegisterStudent() {
               {capturedImages.length >= 5 ? (
                 <button
                   onClick={uploadImages}
-                  className="btn-3d w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(16,185,129,0.3)] flex items-center justify-center col-span-2"
+                  className="btn-3d-success w-full col-span-2 disabled:opacity-50"
                   disabled={loading}
                 >
                   {loading ? '⏳ Uploading...' : '✅ Upload Images'}
@@ -331,9 +331,7 @@ function RegisterStudent() {
               ) : null}
               <button
                 onClick={cancelRegistration}
-                className={`btn-3d w-full py-3 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl font-bold text-sm ${
-                  capturedImages.length >= 5 ? 'col-span-2' : 'col-span-2'
-                }`}
+                className="btn-3d-danger w-full col-span-2 disabled:opacity-50"
                 disabled={loading}
               >
                 ❌ Cancel Registration

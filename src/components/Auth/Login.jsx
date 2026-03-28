@@ -38,7 +38,7 @@ function Login({ onLogin }) {
       <div className="absolute top-[-10%] left-[-10%] w-72 h-72 rounded-full bg-gradient-1 opacity-20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-2 opacity-20 blur-3xl pointer-events-none"></div>
 
-      <div className="card-3d w-full max-w-[400px] p-8 relative z-10 mx-auto bg-white/80 backdrop-blur-xl">
+      <div className="card-3d-modern w-full max-w-[400px] p-8 relative z-10 mx-auto bg-white/80 backdrop-blur-xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-black text-gray-900 tracking-tight drop-shadow-sm mb-2">
             🎓 Attendify
@@ -53,7 +53,7 @@ function Login({ onLogin }) {
             <label>📧 Student ID / Email</label>
             <input
               type="text"
-              className="input-field"
+              className="input-3d"
               placeholder="Enter Student ID (e.g., stu001) or Email"
               value={credentials.email}
               onChange={(e) =>
@@ -67,7 +67,7 @@ function Login({ onLogin }) {
             <label>🔒 Password</label>
             <input
               type="password"
-              className="input-field"
+              className="input-3d"
               placeholder="Enter your password"
               value={credentials.password}
               onChange={(e) =>
@@ -85,7 +85,7 @@ function Login({ onLogin }) {
 
           <button
             type="submit"
-            className="btn-3d w-full py-4 mt-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl font-black text-lg shadow-[0_8px_20px_rgba(99,102,241,0.4)]"
+            className="btn-3d-primary w-full disabled:opacity-50"
             disabled={loading}
           >
             {loading ? '⏳ Logging in...' : '🚀 Login to Account'}
@@ -98,7 +98,7 @@ function Login({ onLogin }) {
             New to Attendify?
           </p>
           <button
-            className="btn-3d w-full py-4 bg-indigo-50 text-indigo-700 rounded-2xl font-bold border border-indigo-100/50"
+            className="btn-3d-secondary w-full"
             type="button"
             onClick={() => navigate('/register')}
           >

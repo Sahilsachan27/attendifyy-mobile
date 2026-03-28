@@ -30,7 +30,7 @@ function TrainModel() {
         </h2>
       </div>
 
-      <div className="card-3d p-5 sm:p-6 space-y-6">
+      <div className="card-3d-modern p-5 sm:p-6 space-y-6">
         <div className="bg-blue-50/80 border border-blue-200 rounded-2xl p-5 relative shadow-inner">
           <h3 className="text-[11px] font-black text-blue-800 mb-3 flex items-center gap-2 uppercase tracking-wider">
             <span>ℹ️</span> Training Instructions
@@ -57,7 +57,7 @@ function TrainModel() {
           <button
             onClick={handleTrain}
             disabled={training}
-            className="btn-3d w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(99,102,241,0.3)] transition-all flex items-center justify-center gap-2"
+            className="btn-3d-primary w-full disabled:opacity-50"
           >
             {training ? '⏳ Training Model...' : '🤖 Start Training Model'}
           </button>

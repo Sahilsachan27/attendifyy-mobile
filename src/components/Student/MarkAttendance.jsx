@@ -172,7 +172,7 @@ function MarkAttendance({ user }) {
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in p-2 sm:p-4 pb-12">
-      <div className="card-3d p-3 sm:p-8">
+      <div className="card-3d-modern p-3 sm:p-8">
         {/* Header & Camera Toggle Header */}
         <div className="flex justify-between items-center mb-3 sm:mb-6 border-b border-gray-100 pb-3 sm:pb-6">
           <div className="flex flex-col">
@@ -196,7 +196,7 @@ function MarkAttendance({ user }) {
             {!supportsCamera && (
               <button
                 onClick={() => setShowFileInput(true)}
-                className="p-2 bg-white text-gray-700 rounded-lg font-bold border-2 border-gray-200 shadow-sm hover:border-indigo-300 hover:text-indigo-600 transition-all text-xs"
+                className="p-2 bg-white text-gray-700 rounded-lg font-bold border-2 border-gray-200 shadow-sm   transition-all text-xs"
                 title="Use Phone Photo"
               >
                 📱 <span className="hidden sm:inline">Photo</span>
@@ -259,10 +259,12 @@ function MarkAttendance({ user }) {
         )}
 
         {/* Webcam Feed or File Preview */}
-        <div
-          className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_4px_20px_-10px_rgba(0,0,0,0.2)] mb-3 sm:mb-8 flex items-center justify-center mx-auto bg-gray-900 border-2 sm:border-4 border-gray-800 mark-attendance-camera"
-          style={{ width: '100%', aspectRatio: '1/1' }}
-        >
+        <div className="relative rounded-[2rem] overflow-hidden shadow-[0_15px_40px_rgba(99,102,241,0.2)] mb-4 sm:mb-8 flex items-center justify-center mx-auto bg-gradient-to-b from-indigo-50 to-white border-4 border-white mark-attendance-camera"
+          style={{ width: '100%', aspectRatio: '1/1' }}>
+          
+          {/* Subtle Inner Glow */}
+          <div className="absolute inset-0 shadow-inner rounded-[1.8rem] pointer-events-none z-10 border border-indigo-100/50"></div>
+
           {cameraActive ? (
             <div className="w-full h-full relative">
               <Webcam
@@ -271,7 +273,7 @@ function MarkAttendance({ user }) {
                 screenshotFormat="image/jpeg"
                 videoConstraints={{ facingMode: 'user' }}
                 mirrored={true}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-[1.8rem]"
                 screenshotQuality={1}
                 style={{
                   objectFit: 'cover',
@@ -280,26 +282,29 @@ function MarkAttendance({ user }) {
                   aspectRatio: '1/1',
                 }}
               />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-32 h-32 sm:w-48 sm:h-48 border-2 sm:border-4 border-emerald-400/50 rounded-full animate-pulse shadow-[0_0_20px_rgba(52,211,153,0.3)]"></div>
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                <div className="w-32 h-32 sm:w-48 sm:h-48 border-2 sm:border-[3px] border-emerald-400/80 rounded-full animate-pulse shadow-[0_0_30px_rgba(52,211,153,0.5)]"></div>
               </div>
             </div>
           ) : fileImage ? (
             <img
               src={fileImage}
               alt="Selected"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-[1.8rem]"
             />
           ) : (
-            <div className="text-center text-white px-4 w-full flex flex-col items-center justify-center h-full">
-              <div className="w-12 h-12 sm:w-20 sm:h-20 bg-gray-800 rounded-full flex items-center justify-center text-2xl sm:text-4xl mb-2 sm:mb-4 shadow-inner border border-gray-700">
-                📷
+            <div className="text-center px-4 w-full flex flex-col items-center justify-center h-full relative z-10">
+              <div className="absolute top-[-20%] left-[-20%] w-40 h-40 bg-indigo-400/10 blur-3xl rounded-full pointer-events-none"></div>
+              <div className="absolute bottom-[-20%] right-[-20%] w-40 h-40 bg-purple-400/10 blur-3xl rounded-full pointer-events-none"></div>
+              
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-3xl flex items-center justify-center text-3xl sm:text-4xl mb-3 sm:mb-4 shadow-[0_8px_20px_rgba(99,102,241,0.15)] border border-indigo-50/50">
+                📸
               </div>
-              <h3 className="text-sm sm:text-lg font-black tracking-tight mb-1 text-gray-300">
-                Camera Inactive
+              <h3 className="text-base sm:text-lg font-black tracking-tight mb-1 text-gray-800 drop-shadow-sm">
+                Camera Standby
               </h3>
-              <p className="text-[9px] sm:text-xs font-bold text-gray-500 uppercase tracking-widest">
-                Ready for capture
+              <p className="text-[9px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest">
+                Waiting for activation
               </p>
             </div>
           )}
@@ -383,7 +388,7 @@ function MarkAttendance({ user }) {
               <button
                 onClick={getLocation}
                 disabled={loading}
-                className="btn-3d px-3 py-3 sm:px-6 sm:py-4 bg-white text-gray-700 rounded-xl font-black uppercase tracking-widest text-xs border-2 border-gray-200 hover:border-indigo-300 hover:text-indigo-600 transition-all shadow-sm disabled:opacity-50 flex items-center justify-center whitespace-nowrap"
+                className="btn-3d px-3 py-3 sm:px-6 sm:py-4 bg-white text-gray-700 rounded-xl font-black uppercase tracking-widest text-xs border-2 border-gray-200   transition-all shadow-sm disabled:opacity-50 flex items-center justify-center whitespace-nowrap"
               >
                 🔄 <span className="hidden sm:inline ml-1">Refresh</span>
               </button>

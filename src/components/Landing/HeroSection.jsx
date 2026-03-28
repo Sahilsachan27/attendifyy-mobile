@@ -56,7 +56,7 @@ function HeroSection() {
           ].map((stat, idx) => (
             <div
               key={idx}
-              className="glass p-3 rounded-2xl flex flex-col items-center justify-center transform transition-transform hover:scale-105"
+              className="glass p-3 rounded-2xl flex flex-col items-center justify-center transform transition-transform "
             >
               <div className="text-xl font-black text-white drop-shadow-md">
                 {stat.num}
